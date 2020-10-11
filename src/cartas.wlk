@@ -1,3 +1,5 @@
+import wollok.game.*
+
 object mazo{
 
 const cartas = #{}
@@ -24,7 +26,9 @@ class Carta {
 	
 	method num() = num
 	
-	method image() = true
+	method image() = palo+num+".png"
+	
+	method position() = true 
 	
 	method mostrate() = true
 	
@@ -36,3 +40,6 @@ class Carta {
 	
 	method esPareja(otraCarta) = true
 }
+
+
+
