@@ -1,8 +1,10 @@
 import wollok.game.*
-import pepita.*
+import cartas.*
 
-program game {
-	game.title("Juego Base")
-	game.addVisual(pepita)
+program ejemplo{
+	game.width(40)
+	game.height(20)
+	game.title("Juego")
+	game.addVisual(cartitaPrueba)
 	game.start()
 }
