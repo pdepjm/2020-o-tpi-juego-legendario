@@ -21,8 +21,8 @@ method cartasEnMazo() = cartas.size()
 
 
 class Carta {
-	var palo
-	var num
+	var palo = "corazon"
+	var num = 1
 	
 	method num() = num
 	
@@ -42,4 +42,8 @@ class Carta {
 }
 
 
+object cartitaPrueba inherits Carta{
 
+	override method position() = game.center()
+	
+}
