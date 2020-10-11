@@ -1,19 +1,19 @@
 object mazo{
 
-const lista = #{}
+const cartas = #{}
 const palos = ["corazon","pica","trebol","espada"]
 
-method lista() = lista
+method cartas() = cartas
 
 method cargaPalos(){
 	palos.forEach({palo => self.creaTandaPalo(palo)})
 }
 
 method creaTandaPalo(unPalo){
-	new Range(start = 1, end = 13).forEach { value => lista.add(new Carta(palo=unPalo,num=value))}
+	new Range(start = 1, end = 13).forEach { value => cartas.add(new Carta(palo=unPalo,num=value))}
 }
 
-method cartasEnMazo() = lista.size()
+method cartasEnMazo() = cartas.size()
 
 }
 
