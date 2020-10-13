@@ -1,30 +1,51 @@
 import wollok.game.*
+import jugadores.*
 
 object mazo{
 
-const cartas = #{}
-const palos = ["corazon","pica","trebol","espada"]
+const property cartasMazo = #{}
+const palos = ["basto","oro","copa","espada"]
 
-method cartas() = cartas
+//method cartas() = cartas
 
 method cargaPalos(){
 	palos.forEach({palo => self.creaTandaPalo(palo)})
 }
 
 method creaTandaPalo(unPalo){
-	new Range(start = 1, end = 13).forEach { value => cartas.add(new Carta(palo=unPalo,num=value))}
+	new Range(start = 1, end = 12).forEach { value => cartasMazo.add(new Carta(palo=unPalo,num=value))}
 }
 
-method cartasEnMazo() = cartas.size()
+method cartasEnMazo() = cartasMazo.size()
+
+method repartirCartas(){
+	new Range(start = 1, end = 6).forEach { value => jugador.recibirCarta(cartasMazo.anyOne())}
+	/**jugador.recibirCarta(cartasMazo.anyOne())
+	jugador.recibirCarta(cartasMazo.anyOne())
+	jugador.recibirCarta(cartasMazo.anyOne())
+	jugador.recibirCarta(cartasMazo.anyOne())
+	jugador.recibirCarta(cartasMazo.anyOne())
+	jugador.recibirCarta(cartasMazo.anyOne())*/
+	cartasMazo.removeAll(jugador.cartasJugador())
+}
+
+method darUnaCarta(){
+	jugador.recibirCarta(cartasMazo.anyOne())
+}
 
 }
 
 
 class Carta {
+	//hay que csmbiar el corazon porque usamos cartas españolas 
 	var palo = "corazon"
-	var num = 1
+	const num = 1
 	
 	method num() = num
+	
+	method mismoNumero(numero) = num == numero 
+	
+	method palo() = palo
 	
 	method image() = palo+num+".png"
 	
