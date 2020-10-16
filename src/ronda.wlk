@@ -7,8 +7,8 @@ object ronda{
 	var elQueEstabaJugando
 	var elQueJuega
 	
-	method seguirJugando(){
-		elQueJuega = quienJuega.first()
+	method elQueLeToca(){
+		return quienJuega.first()
 		
 	}
 	
@@ -16,6 +16,13 @@ object ronda{
 		elQueEstabaJugando = quienJuega.first()
 		quienJuega.remove(quienJuega.first())
 		quienJuega.add(elQueEstabaJugando)
-		self.seguirJugando()
+		self.elQueLeToca().pedirCartas()
+			
+	}	
+	
+	method seguirJugando(){
+		quienJuega.first().pedirCartas()
 	}
+
 }
+

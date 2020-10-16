@@ -35,6 +35,7 @@ object jugador{
 method pedirCartas(unaCarta){
 		if((jugador2.cartasJugador2()).contains(unaCarta)){
 		self.recibirCarta(unaCarta)
+		ronda.seguirJugando()
 		}
 		else{
 			self.irAPescar()
