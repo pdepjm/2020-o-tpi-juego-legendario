@@ -3,13 +3,19 @@ import cartas.*
 
 
 object ronda{
-	var quienJuega
+	var quienJuega = [jugador, jugador2]
+	var elQueEstabaJugando
+	var elQueJuega
 	
 	method seguirJugando(){
-		return true
+		elQueJuega = quienJuega.first()
+		
 	}
 	
 	method pasarTurno(){
-		return true
+		elQueEstabaJugando = quienJuega.first()
+		quienJuega.remove(quienJuega.first())
+		quienJuega.add(elQueEstabaJugando)
+		self.seguirJugando()
 	}
 }
