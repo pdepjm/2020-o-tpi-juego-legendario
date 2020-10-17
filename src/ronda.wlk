@@ -3,9 +3,9 @@ import cartas.*
 
 
 object ronda{
-	var quienJuega = [jugador, jugador2]
+	const quienJuega = [jugador, jugador2]
 	var elQueEstabaJugando
-	var elQueJuega
+	//var elQueJuega
 	
 	method elQueLeToca(){
 		return quienJuega.first()
@@ -23,6 +23,5 @@ object ronda{
 	method seguirJugando(){
 		quienJuega.first().pedirCartas()
 	}
-
 }
 
