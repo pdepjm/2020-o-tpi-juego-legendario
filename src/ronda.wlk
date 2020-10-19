@@ -23,5 +23,15 @@ object ronda{
 	method seguirJugando(){
 		quienJuega.first().pedirCartas()
 	}
+	
+	method comenzarJuego(){
+		mazo.repartilesCartas(quienJuega)	//la ronda le delega al mazo que reparta las cartas a los jugadores que juegan
+		//self.asignaContrincantes()
+	}
+	
+	method asignaContrincantes(){
+		quienJuega.first().contrincante(quienJuega.last())
+		quienJuega.last().contrincante(quienJuega.first()) 
+	}
 }
 

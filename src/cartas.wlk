@@ -1,12 +1,15 @@
 import wollok.game.*
 import jugadores.*
+import ronda.*
 
 object mazo{
 
-const property cartasMazo = #{}
+const property cartasMazo = []
 const palos = ["basto","oro","copa","espada"]
 
-//method cartas() = cartas
+method paloCartas() = cartasMazo.map({ cartita => cartita.decimeTuPalo() })	// paloCartas y numCartas para ver que no se repitan
+
+method numCartas() = cartasMazo.map({ cartita => cartita.decimeTuNum() })
 
 method cargaPalos(){
 	palos.forEach({palo => self.creaTandaPalo(palo)})
@@ -18,19 +21,19 @@ method creaTandaPalo(unPalo){
 
 method cartasEnMazo() = cartasMazo.size()
 
-method repartirCartas(){
-	new Range(start = 1, end = 6).forEach { value => jugador.recibirCarta(cartasMazo.anyOne())}
-	/**jugador.recibirCarta(cartasMazo.anyOne())
-	jugador.recibirCarta(cartasMazo.anyOne())
-	jugador.recibirCarta(cartasMazo.anyOne())
-	jugador.recibirCarta(cartasMazo.anyOne())
-	jugador.recibirCarta(cartasMazo.anyOne())
-	jugador.recibirCarta(cartasMazo.anyOne())*/
-	cartasMazo.removeAll(jugador.cartasJugador())
+method repartilesCartas(jugadores){
+	jugadores.forEach{unJugador => self.repartirCartas(unJugador)}   //agrego esta funcion que recibe los jugadores de ronda
 }
 
-method darUnaCarta(){
-	jugador.recibirCarta(cartasMazo.anyOne())
+method repartirCartas(unJugador) {
+	new Range(start = 1, end = 6).forEach{ value => unJugador.recibirCarta(cartasMazo.anyOne())}
+	cartasMazo.removeAll(unJugador.cartasJugador())
+}
+
+
+method darUnaCarta(unJugador){
+	unJugador.recibirCarta(cartasMazo.anyOne())
+	cartasMazo.removeAll(unJugador.cartasJugador())	// elimino la carta del mazo
 }
 
 }
@@ -38,8 +41,12 @@ method darUnaCarta(){
 
 class Carta {
 	//hay que csmbiar el corazon porque usamos cartas españolas 
-	var palo = "corazon"
-	const num = 1
+	var palo 
+	const num 
+	
+	method decimeTuPalo() = palo	
+
+	method decimeTuNum() = num
 	
 	method num() = num
 	

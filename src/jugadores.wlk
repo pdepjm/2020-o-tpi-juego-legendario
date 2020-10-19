@@ -9,6 +9,10 @@ object jugador{
 	var property posicion = game.origin()
 	var lista = #{}
 	
+	method paloCartas() = cartasJugador.map({cartita => cartita.decimeTuPalo()})	// decime tu palo y num para ver 
+	
+	method numCartas() = cartasJugador.map({unaCarta => unaCarta.decimeTuNum()})	// que cartas tienen los jugadores
+	
 	method sumarPunto(){
 		cantPuntos += 1	}
 	
@@ -33,7 +37,7 @@ object jugador{
 	}
 	
 method pedirCartas(unaCarta){
-		if((jugador2.cartasJugador2()).contains(unaCarta)){
+		if((jugador2.cartasJugador()).contains(unaCarta)){
 		self.recibirCarta(unaCarta)
 		ronda.seguirJugando()
 		}
@@ -44,28 +48,32 @@ method pedirCartas(unaCarta){
 	}
 	
 method irAPescar(){
-		mazo.darUnaCarta()
+		mazo.darUnaCarta(self)
 	}
 }
 
 object jugador2{
 	var property cantPuntos2 = 0
-	var property cartasJugador2 = #{}
+	var property cartasJugador = #{}
 	var property posicion2 = game.origin()
 	var lista2 = #{}
+	
+	method paloCartas() = cartasJugador.map({cartita => cartita.decimeTuPalo()})
+	
+	method numCartas() = cartasJugador.map({unaCarta => unaCarta.decimeTuNum()})
 	
 	method sumarPunto(){
 		cantPuntos2 += 1	}
 	
 	method recibirCarta(cartasAgregadas){
 		
-		cartasJugador2.add(cartasAgregadas)	
+		cartasJugador.add(cartasAgregadas)	
 	}
-	method cartasJugador2() = cartasJugador2
+	method cartasJugador() = cartasJugador
 	
 	
 	method darCarta(cartaPedida){
-		cartasJugador2.remove(cartaPedida)
+		cartasJugador.remove(cartaPedida)
 	}
 	
 method pedirCartas(unaCarta){
@@ -80,11 +88,11 @@ method pedirCartas(unaCarta){
 			
 	}
 method irAPescar(){
-		mazo.darUnaCarta()
+		mazo.darUnaCarta(self)
 	}
 	
 	method cuatroCartasIguales(numero){
-		lista2 = (self.cartasJugador2()).filter{unaCarta => unaCarta.mismoNumero(numero)}
+		lista2 = (self.cartasJugador()).filter{unaCarta => unaCarta.mismoNumero(numero)}
 		if(lista2.sizeOf() == 4){
 			self.sumarPunto()
 		}
