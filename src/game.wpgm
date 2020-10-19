@@ -4,7 +4,7 @@ import cartas.*
 program ejemplo{
 	game.width(40)
 	game.height(20)
-	game.title("Juego")
-	game.addVisual(cartitaPrueba)
+	game.title("Go Fish")
+	game.addVisual(mazo)
 	game.start()
 }
