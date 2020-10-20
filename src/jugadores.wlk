@@ -1,107 +1,116 @@
-
 import wollok.game.*
 import cartas.*
 import ronda.*
-	
-object jugador{
+
+object jugador {
+
 	var property cantPuntos = 0
-	var property cartasJugador = #{}
+	const property cartasJugador = []
 	var property posicion = game.origin()
 	var lista = #{}
-	
-	method paloCartas() = cartasJugador.map({cartita => cartita.decimeTuPalo()})	// decime tu palo y num para ver 
-	
-	method numCartas() = cartasJugador.map({unaCarta => unaCarta.decimeTuNum()})	// que cartas tienen los jugadores
-	
-	method sumarPunto(){
-		cantPuntos += 1	}
-	
-	
-	
-	method recibirCarta(cartasAgregadas){
-		
-		cartasJugador.add(cartasAgregadas)	
+
+	method acomodarCartasEnMesa() {
+		var incrementador = 1
+		cartasJugador.forEach{ carta =>
+			carta.posicion(game.center().right(incrementador))
+		;incrementador++
+		}
 	}
+
+	method mostrarCartas() {
+		cartasJugador.forEach{ carta => game.addVisual(carta)}
+	}
+
+	method paloCartas() = cartasJugador.map({ cartita => cartita.decimeTuPalo() }) // decime tu palo y num para ver 
+
+	method numCartas() = cartasJugador.map({ unaCarta => unaCarta.decimeTuNum() }) // que cartas tienen los jugadores
+
+	method sumarPunto() {
+		cantPuntos += 1
+	}
+
+	method recibirCarta(cartasAgregadas) {
+		cartasJugador.add(cartasAgregadas)
+	}
+
 	method cartasJugador() = cartasJugador
-	
-	
-	method darCarta(cartaPedida){
+
+	method darCarta(cartaPedida) {
 		cartasJugador.remove(cartaPedida)
 	}
+
 	// esta bien que el jugador diga tengo cuatro cartas iguales o tendria que la maquina darle un punto cuando ve que tiene 
 	// cuatro cartas iguales
-	method cuatroCartasIguales(numero){
-		lista = (self.cartasJugador()).filter{unaCarta => unaCarta.mismoNumero(numero)}
-		if(lista.sizeOf() == 4){
+	method cuatroCartasIguales(numero) {
+		lista = (self.cartasJugador()).filter{ unaCarta => unaCarta.mismoNumero(numero) }
+		if (lista.sizeOf() == 4) {
 			self.sumarPunto()
 		}
-		//que se pone 
+	// que se pone 
 	}
-	
-method pedirCartas(unaCarta){
-		if((jugador2.cartasJugador()).contains(unaCarta)){
-		self.recibirCarta(unaCarta)
-		ronda.seguirJugando()
-		}
-		else{
+
+	method pedirCartas(unaCarta) {
+		if ((jugador2.cartasJugador()).contains(unaCarta)) {
+			self.recibirCarta(unaCarta)
+			ronda.seguirJugando()
+		} else {
 			self.irAPescar()
 			ronda.pasarTurno()
 		}
 	}
-	
-method irAPescar(){
+
+	method irAPescar() {
 		mazo.darUnaCarta(self)
 	}
+
 }
 
-object jugador2{
+object jugador2 {
+
 	var property cantPuntos2 = 0
 	var property cartasJugador = #{}
 	var property posicion2 = game.origin()
 	var lista2 = #{}
-	
-	method paloCartas() = cartasJugador.map({cartita => cartita.decimeTuPalo()})
-	
-	method numCartas() = cartasJugador.map({unaCarta => unaCarta.decimeTuNum()})
-	
-	method sumarPunto(){
-		cantPuntos2 += 1	}
-	
-	method recibirCarta(cartasAgregadas){
-		
-		cartasJugador.add(cartasAgregadas)	
+
+	method paloCartas() = cartasJugador.map({ cartita => cartita.decimeTuPalo() })
+
+	method numCartas() = cartasJugador.map({ unaCarta => unaCarta.decimeTuNum() })
+
+	method sumarPunto() {
+		cantPuntos2 += 1
 	}
+
+	method recibirCarta(cartasAgregadas) {
+		cartasJugador.add(cartasAgregadas)
+	}
+
 	method cartasJugador() = cartasJugador
-	
-	
-	method darCarta(cartaPedida){
+
+	method darCarta(cartaPedida) {
 		cartasJugador.remove(cartaPedida)
 	}
-	
-method pedirCartas(unaCarta){
-		if((jugador.cartasJugador()).contains(unaCarta)){
-		self.recibirCarta(unaCarta)
-		ronda.seguirJugando()
-        }
-		else{
+
+	method pedirCartas(unaCarta) {
+		if ((jugador.cartasJugador()).contains(unaCarta)) {
+			self.recibirCarta(unaCarta)
+			ronda.seguirJugando()
+		} else {
 			self.irAPescar()
 			ronda.pasarTurno()
 		}
-			
 	}
-method irAPescar(){
+
+	method irAPescar() {
 		mazo.darUnaCarta(self)
 	}
-	
-	method cuatroCartasIguales(numero){
-		lista2 = (self.cartasJugador()).filter{unaCarta => unaCarta.mismoNumero(numero)}
-		if(lista2.sizeOf() == 4){
+
+	method cuatroCartasIguales(numero) {
+		lista2 = (self.cartasJugador()).filter{ unaCarta => unaCarta.mismoNumero(numero) }
+		if (lista2.sizeOf() == 4) {
 			self.sumarPunto()
 		}
-		//que se pone 
+	// que se pone 
 	}
+
 }
-
-
-
 

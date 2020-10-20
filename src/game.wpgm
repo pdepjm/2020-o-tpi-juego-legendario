@@ -1,10 +1,16 @@
 import wollok.game.*
 import cartas.*
+import ronda.*
+import jugadores.*
 
 program ejemplo{
 	game.width(40)
 	game.height(20)
 	game.title("Go Fish")
 	game.addVisual(mazo)
+	mazo.cargaPalos()
+	ronda.comenzarJuego()
+	jugador.acomodarCartasEnMesa()
+	jugador.mostrarCartas()
 	game.start()
 }

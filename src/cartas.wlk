@@ -7,7 +7,7 @@ object mazo {
 	const property cartasMazo = []
 	const palos = [ "basto", "oro", "copa", "espada" ]
 
-	method position() = game.center()
+	method position() = game.origin()
 
 	method image() = "posterior.png"
 
@@ -30,7 +30,7 @@ object mazo {
 	}
 
 	method repartirCartas(unJugador) {
-		new Range(start = 1, end = 6).forEach{ value => unJugador.recibirCarta(cartasMazo.anyOne())}
+		new Range(start = 1, end = 7).forEach{ value => unJugador.recibirCarta(cartasMazo.anyOne())}
 		cartasMazo.removeAll(unJugador.cartasJugador())
 	}
 
@@ -42,8 +42,7 @@ object mazo {
 }
 
 class Carta {
-
-	// hay que csmbiar el corazon porque usamos cartas españolas 
+	var property posicion = game.center() 
 	var palo
 	const num
 
@@ -51,15 +50,11 @@ class Carta {
 
 	method decimeTuNum() = num
 
-	method num() = num
-
 	method mismoNumero(numero) = num == numero
-
-	method palo() = palo
 
 	method image() = palo + num + ".png"
 
-	method position() = true
+	method position() = posicion
 
 	method mostrate() = true
 
@@ -73,9 +68,5 @@ class Carta {
 
 }
 
-object cartitaPrueba inherits Carta {
 
-	override method position() = game.center()
-
-}
 
