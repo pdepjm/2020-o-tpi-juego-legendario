@@ -8,16 +8,24 @@ object jugador {
 	const property cartasJugador = []
 	var property posicion = game.origin()
 	var lista = #{}
+	
+	method mostraFrenteCartas(){
+		cartasJugador.forEach{carta=>carta.esCartaJugador(true)}
+	}
 
-	method acomodarCartasEnMesa() {
+	method tomaPosicion(unaPosicion){
+		cartasJugador.forEach{carta=>carta.posicion(unaPosicion)}
+	}
+
+	method acomodarCartas() {
 		var incrementador = 1
 		cartasJugador.forEach{ carta =>
-			carta.posicion(game.center().right(incrementador))
+			carta.posicion(carta.position().right(incrementador))
 		;incrementador++
 		}
 	}
 
-	method mostrarCartas() {
+	method mostrarCartasEnMesa() {
 		cartasJugador.forEach{ carta => game.addVisual(carta)}
 	}
 
@@ -71,6 +79,26 @@ object jugador2 {
 	var property cartasJugador = #{}
 	var property posicion2 = game.origin()
 	var lista2 = #{}
+	
+	method mostraFrenteCartas(){
+		cartasJugador.forEach{carta=>carta.esCartaJugador(true)}
+	}
+	
+	method tomaPosicion(unaPosicion){
+		cartasJugador.forEach{carta=>carta.posicion(unaPosicion)}
+	}
+	
+	method acomodarCartas() {
+		var incrementador = 1
+		cartasJugador.forEach{ carta =>
+			carta.posicion(carta.position().right(incrementador))
+		;incrementador++
+		}
+	}
+
+	method mostrarCartasEnMesa() {
+		cartasJugador.forEach{ carta => game.addVisual(carta)}
+	}		
 
 	method paloCartas() = cartasJugador.map({ cartita => cartita.decimeTuPalo() })
 

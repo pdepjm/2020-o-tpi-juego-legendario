@@ -1,3 +1,4 @@
+import wollok.game.*
 import jugadores.*
 import cartas.*
 
@@ -26,7 +27,33 @@ object ronda{
 	
 	method comenzarJuego(){
 		mazo.repartilesCartas(quienJuega)	//la ronda le delega al mazo que reparta las cartas a los jugadores que juegan
+		self.jugadoresPresentarse()
 		//self.asignaContrincantes()
+	}
+	
+	method jugadoresPresentarse(){
+		self.tomenSuPosicion()
+//		self.ocultaTusCartas(quienJuega.last())
+	}
+	
+//	method ocultaTusCartas(contrincante){
+//		contrincante.
+//	}
+	
+	method tomenSuPosicion(){
+		self.configurenCartasJugadores()
+		self.posicionEnMesa()
+	}
+	
+	method configurenCartasJugadores(){
+		self.dameJugadorPpal().mostraFrenteCartas()
+	}
+	
+	method dameJugadorPpal() = quienJuega.first()
+	
+	method posicionEnMesa(){
+		quienJuega.first().tomaPosicion(game.at(17,2))
+		quienJuega.last().tomaPosicion(game.at(17,12))
 	}
 	
 	method asignaContrincantes(){

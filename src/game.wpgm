@@ -10,7 +10,9 @@ program ejemplo{
 	game.addVisual(mazo)
 	mazo.cargaPalos()
 	ronda.comenzarJuego()
-	jugador.acomodarCartasEnMesa()
-	jugador.mostrarCartas()
+	jugador.acomodarCartas()
+	jugador.mostrarCartasEnMesa()
+	jugador2.acomodarCartas()
+	jugador2.mostrarCartasEnMesa()
 	game.start()
 }

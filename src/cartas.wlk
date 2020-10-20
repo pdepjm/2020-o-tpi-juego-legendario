@@ -42,9 +42,11 @@ object mazo {
 }
 
 class Carta {
-	var property posicion = game.center() 
+
+	var property posicion = game.center()
 	var palo
 	const num
+	var property esCartaJugador = false
 
 	method decimeTuPalo() = palo
 
@@ -52,7 +54,13 @@ class Carta {
 
 	method mismoNumero(numero) = num == numero
 
-	method image() = palo + num + ".png"
+	method image() {
+		return if (self.esCartaJugador())
+		palo + num + ".png"
+	else "posteriorCartaEnJuego"
+	}
+
+	method esCartaJugador() = esCartaJugador  
 
 	method position() = posicion
 
