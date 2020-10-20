@@ -16,6 +16,8 @@ object jugador{
 	method sumarPunto(){
 		cantPuntos += 1	}
 	
+	
+	
 	method recibirCarta(cartasAgregadas){
 		
 		cartasJugador.add(cartasAgregadas)	
