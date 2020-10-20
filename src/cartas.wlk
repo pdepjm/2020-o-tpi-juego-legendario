@@ -57,7 +57,7 @@ class Carta {
 	method image() {
 		return if (self.esCartaJugador())
 		palo + num + ".png"
-	else "posteriorCartaEnJuego"
+	else "posteriorCartaEnJuego.png"
 	}
 
 	method esCartaJugador() = esCartaJugador  
