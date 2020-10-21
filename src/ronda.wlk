@@ -27,12 +27,13 @@ object ronda{
 	
 	method comenzarJuego(){
 		mazo.repartilesCartas(quienJuega)	//la ronda le delega al mazo que reparta las cartas a los jugadores que juegan
-		self.jugadoresPresentarse()
+//		self.jugadoresPresentarse()
 		//self.asignaContrincantes()
 	}
 	
 	method jugadoresPresentarse(){
 		self.tomenSuPosicion()
+		
 //		self.ocultaTusCartas(quienJuega.last())
 	}
 	
@@ -41,15 +42,15 @@ object ronda{
 //	}
 	
 	method tomenSuPosicion(){
-		self.configurenCartasJugadores()
+//		self.configurenCartasJugadores()
 		self.posicionEnMesa()
 	}
 	
-	method configurenCartasJugadores(){
-		self.dameJugadorPpal().mostraFrenteCartas()
-	}
+//	method configurenCartasJugadores(){
+//		self.dameJugadorPpal().mostraFrenteCartas()
+//	}
 	
-	method dameJugadorPpal() = quienJuega.first()
+//	method dameJugadorPpal() = quienJuega.first()
 	
 	method posicionEnMesa(){
 		quienJuega.first().tomaPosicion(game.at(17,2))

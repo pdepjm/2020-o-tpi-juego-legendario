@@ -9,25 +9,22 @@ object jugador {
 	var property posicion = game.origin()
 	var lista = #{}
 	
-	method mostraFrenteCartas(){
-		cartasJugador.forEach{carta=>carta.esCartaJugador(true)}
-	}
+//	method mostraFrenteCartas(){
+//		cartasJugador.forEach{carta=>carta.esCartaJugador(true)}
+//	}
 
-	method tomaPosicion(unaPosicion){
-		cartasJugador.forEach{carta=>carta.posicion(unaPosicion)}
-	}
+//	method tomaPosicion(unaPosicion){
+//		cartasJugador.forEach{carta=>carta.posicion(unaPosicion)}
+//	}
 
-	method acomodarCartas() {
-		var incrementador = 1
-		cartasJugador.forEach{ carta =>
-			carta.posicion(carta.position().right(incrementador))
-		;incrementador++
-		}
-	}
-
-	method mostrarCartasEnMesa() {
-		cartasJugador.forEach{ carta => game.addVisual(carta)}
-	}
+//	method acomodarCartas() {
+//		var incrementador = 1
+//		cartasJugador.forEach{ carta =>
+//			carta.posicion(carta.position().right(incrementador))
+//		;incrementador++
+//		}
+//	}
+//
 
 	method paloCartas() = cartasJugador.map({ cartita => cartita.decimeTuPalo() }) // decime tu palo y num para ver 
 
@@ -39,6 +36,22 @@ object jugador {
 
 	method recibirCarta(cartasAgregadas) {
 		cartasJugador.add(cartasAgregadas)
+		self.configuraCarta(cartasAgregadas)
+	}
+	
+	method configuraCarta(unaCarta) {
+		unaCarta.esCartaJugador(true)
+		unaCarta.posicion(game.at(17,2))
+		self.acomodarCartaEnMesa(unaCarta)
+		self.mostrarCartaEnMesa(unaCarta)
+	}
+	
+	method acomodarCartaEnMesa(unaCarta) {
+		unaCarta.posicion(unaCarta.position().right(self.cartasJugador().size() + 1))
+	}
+
+	method mostrarCartaEnMesa(unaCarta) {
+		game.addVisual(unaCarta)
 	}
 
 	method cartasJugador() = cartasJugador
@@ -80,26 +93,23 @@ object jugador2 {
 	var property posicion2 = game.origin()
 	var lista2 = #{}
 	
-	method mostraFrenteCartas(){
-		cartasJugador.forEach{carta=>carta.esCartaJugador(true)}
-	}
-	
-	method tomaPosicion(unaPosicion){
-		cartasJugador.forEach{carta=>carta.posicion(unaPosicion)}
-	}
-	
-	method acomodarCartas() {
-		var incrementador = 1
-		cartasJugador.forEach{ carta =>
-			carta.posicion(carta.position().right(incrementador))
-		;incrementador++
-		}
-	}
-
-	method mostrarCartasEnMesa() {
-		cartasJugador.forEach{ carta => game.addVisual(carta)}
-	}		
-
+//	method mostraFrenteCartas(){
+//		cartasJugador.forEach{carta=>carta.esCartaJugador(true)}
+//	}
+//	
+//	method tomaPosicion(unaPosicion){
+//		cartasJugador.forEach{carta=>carta.posicion(unaPosicion)}
+//	}
+//	
+//	method acomodarCartas() {
+//		var incrementador = 1
+//		cartasJugador.forEach{ carta =>
+//			carta.posicion(carta.position().right(incrementador))
+//		;incrementador++
+//		}
+//	}
+//
+		
 	method paloCartas() = cartasJugador.map({ cartita => cartita.decimeTuPalo() })
 
 	method numCartas() = cartasJugador.map({ unaCarta => unaCarta.decimeTuNum() })
@@ -110,6 +120,22 @@ object jugador2 {
 
 	method recibirCarta(cartasAgregadas) {
 		cartasJugador.add(cartasAgregadas)
+		self.configuraCarta(cartasAgregadas)
+	}
+	
+	method configuraCarta(unaCarta) {
+//		unaCarta.esCartaJugador(true)
+		unaCarta.posicion(game.at(17,12))
+		self.acomodarCartaEnMesa(unaCarta)
+		self.mostrarCartaEnMesa(unaCarta)
+	}
+	
+	method acomodarCartaEnMesa(unaCarta) {
+		unaCarta.posicion(unaCarta.position().right(self.cartasJugador().size() + 1))
+	}	
+
+	method mostrarCartaEnMesa(unaCarta) {
+		game.addVisual(unaCarta)
 	}
 
 	method cartasJugador() = cartasJugador
@@ -141,4 +167,5 @@ object jugador2 {
 	}
 
 }
+
 
