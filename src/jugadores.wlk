@@ -27,11 +27,10 @@ object jugador {
 	}
 
 	method cuatroCartasIguales(numero) {
-//		lista = (cartasJugador.filter{ unaCarta => unaCarta.esPareja(numero) })
-		if (self.cartasConMismoNum(numero).size() == 4) 
+		if (cartasJugador.count({carta=>carta.esPareja(numero)}) == 4){ 
 			self.sumarPunto()
 			self.sacaCartas(self.cartasConMismoNum(numero))
-			//cartasJugador.remove(self.cartasConMismoNum(numero))	
+		}	
 	}
 	
 	method sacaCartas(cartas){
@@ -43,7 +42,7 @@ object jugador {
 //	}
 
 	method pedirNum(unNumero){
-		//self.cuatroCartasIguales()
+		self.cuatroCartasIguales(unNumero)
 		if(jugador2.tenesEsteNum(unNumero)){
 			self.dameCartasConEseNum(unNumero)
 			//ronda.seguirJugando()
