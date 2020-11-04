@@ -27,7 +27,7 @@ object jugador {
 	}
 
 	method cuatroCartasIguales(numero) {
-		if (cartasJugador.count({carta=>carta.esPareja(numero)}) == 4){ 
+		if ((self.cartasConMismoNum(numero)).size() == 4){ 
 			self.sumarPunto()
 			self.sacaCartas(self.cartasConMismoNum(numero))
 		}	
@@ -36,10 +36,6 @@ object jugador {
 	method sacaCartas(cartas){
 		cartas.forEach{carta => cartasJugador.remove(carta)}
 	}
-
-//	method juga(){
-//		self.ped
-//	}
 
 	method pedirNum(unNumero){
 		self.cuatroCartasIguales(unNumero)
