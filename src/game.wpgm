@@ -10,8 +10,13 @@ program ejemplo{
 	game.addVisual(mazo)
 	mazo.cargaPalos()
 	ronda.comenzarJuego()
-	jugador.irAPescar()
-	jugador.irAPescar()
-	jugador2.irAPescar()
+//	jugador.irAPescar()
+//	jugador.irAPescar()
+//	jugador2.irAPescar()
+//	jugador.pedirNum(3)
+//	jugador.pedirNum(2)
+	jugador2.pedirNum(2)
+	jugador2.pedirNum(1)
+	
 	game.start()
 }

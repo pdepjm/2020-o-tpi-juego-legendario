@@ -20,7 +20,7 @@ object mazo {
 	}
 
 	method creaTandaPalo(unPalo) {
-		new Range(start = 1, end = 12).forEach{ value => cartasMazo.add(new Carta(palo = unPalo, num = value))}
+		(1..4).forEach{ value => cartasMazo.add(new Carta(palo = unPalo, num = value))}
 	}
 
 	method cartasEnMazo() = cartasMazo.size()
@@ -30,13 +30,17 @@ object mazo {
 	}
 
 	method repartirCartas(unJugador) {
-		new Range(start = 1, end = 7).forEach{ value => unJugador.recibirCarta(cartasMazo.anyOne())}
-		cartasMazo.removeAll(unJugador.cartasJugador())
+		new Range(start = 1, end = 4).forEach{ value => unJugador.recibirCartaMazo(cartasMazo.anyOne())}
+		//cartasMazo.removeAll(unJugador.cartasJugador())
 	}
 
+	method sacarCarta(carta){
+		cartasMazo.remove(carta)
+	}
+	
 	method darUnaCarta(unJugador) {
-		unJugador.recibirCarta(cartasMazo.anyOne())
-		cartasMazo.removeAll(unJugador.cartasJugador()) // elimino la carta del mazo
+		unJugador.recibirCartaMazo(cartasMazo.anyOne())
+		//cartasMazo.removeAll(unJugador.cartasJugador()) // elimino la carta del mazo
 	}
 
 }
@@ -52,8 +56,6 @@ class Carta {
 
 	method decimeTuNum() = num
 
-	method mismoNumero(numero) = num == numero
-
 	method image() {
 		return if (self.esCartaJugador())
 		palo + num + ".png"
@@ -64,15 +66,9 @@ class Carta {
 
 	method position() = posicion
 
-	method mostrate() = true
+	method esPareja(unNumero) = self.decimeTuNum() == unNumero 
 
-	method ocultar() = true
-
-	method parejaAMesa(unaCarta) = true
-
-	method aPescar() = true
-
-	method esPareja(otraCarta) = true
+	//method esPareja(otraCarta) = true
 
 }
 

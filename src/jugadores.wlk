@@ -2,29 +2,14 @@ import wollok.game.*
 import cartas.*
 import ronda.*
 
+
+
 object jugador {
 
 	var property cantPuntos = 0
 	const property cartasJugador = []
 	var property posicion = game.origin()
-	var lista = #{}
-	
-//	method mostraFrenteCartas(){
-//		cartasJugador.forEach{carta=>carta.esCartaJugador(true)}
-//	}
-
-//	method tomaPosicion(unaPosicion){
-//		cartasJugador.forEach{carta=>carta.posicion(unaPosicion)}
-//	}
-
-//	method acomodarCartas() {
-//		var incrementador = 1
-//		cartasJugador.forEach{ carta =>
-//			carta.posicion(carta.position().right(incrementador))
-//		;incrementador++
-//		}
-//	}
-//
+//	var lista 
 
 	method paloCartas() = cartasJugador.map({ cartita => cartita.decimeTuPalo() }) // decime tu palo y num para ver 
 
@@ -34,52 +19,94 @@ object jugador {
 		cantPuntos += 1
 	}
 
-	method recibirCarta(cartasAgregadas) {
-		cartasJugador.add(cartasAgregadas)
-		self.configuraCarta(cartasAgregadas)
-	}
-	
-	method configuraCarta(unaCarta) {
-		unaCarta.esCartaJugador(true)
-		unaCarta.posicion(game.at(17,2))
-		self.acomodarCartaEnMesa(unaCarta)
-		self.mostrarCartaEnMesa(unaCarta)
-	}
-	
-	method acomodarCartaEnMesa(unaCarta) {
-		unaCarta.posicion(unaCarta.position().right(self.cartasJugador().size() + 1))
-	}
-
-	method mostrarCartaEnMesa(unaCarta) {
-		game.addVisual(unaCarta)
-	}
-
 	method cartasJugador() = cartasJugador
 
 	method darCarta(cartaPedida) {
 		cartasJugador.remove(cartaPedida)
+		cartasJugador.add(cartaPedida)
 	}
 
-	// esta bien que el jugador diga tengo cuatro cartas iguales o tendria que la maquina darle un punto cuando ve que tiene 
-	// cuatro cartas iguales
 	method cuatroCartasIguales(numero) {
-		lista = (self.cartasJugador()).filter{ unaCarta => unaCarta.mismoNumero(numero) }
-		if (lista.sizeOf() == 4) {
+//		lista = (cartasJugador.filter{ unaCarta => unaCarta.esPareja(numero) })
+		if (self.cartasConMismoNum(numero).size() == 4) 
 			self.sumarPunto()
-		}
-	// que se pone 
+			self.sacaCartas(self.cartasConMismoNum(numero))
+			//cartasJugador.remove(self.cartasConMismoNum(numero))	
+	}
+	
+	method sacaCartas(cartas){
+		cartas.forEach{carta => cartasJugador.remove(carta)}
 	}
 
-	method pedirCartas(unaCarta) {
-		if ((jugador2.cartasJugador()).contains(unaCarta)) {
-			self.recibirCarta(unaCarta)
-			ronda.seguirJugando()
+//	method juga(){
+//		self.ped
+//	}
+
+	method pedirNum(unNumero){
+		//self.cuatroCartasIguales()
+		if(jugador2.tenesEsteNum(unNumero)){
+			self.dameCartasConEseNum(unNumero)
+			//ronda.seguirJugando()
 		} else {
 			self.irAPescar()
-			ronda.pasarTurno()
-		}
+			//ronda.pasarTurno()
+		  }
+		self.cuatroCartasIguales(unNumero)  
+	}
+	
+	method tenesEsteNum(unNumero) = (cartasJugador.map({carta=>carta.decimeTuNum()})).contains(unNumero)
+	
+	method dameCartasConEseNum(unNumero){ 
+		self.dameCartas(jugador2.cartasConMismoNum(unNumero))
+	}
+			// OK
+	method cartasConMismoNum(unNumero) = cartasJugador.filter({carta=>carta.esPareja(unNumero)})
+	
+	method dameCartas(cartas){//OK
+		cartas.forEach{carta=>jugador2.darCartaJugador(carta)}
 	}
 
+	method recibirCartaMazo(carta) {
+		mazo.sacarCarta(carta)
+		cartasJugador.add(carta)
+		self.configuraCarta(carta)
+		self.mostrarCartaEnMesa(carta)
+	}
+	
+	method recibirCartaJugador(carta){
+		jugador2.sacarCarta(carta)
+		cartasJugador.add(carta)
+		self.configuraCarta(carta)
+	}
+	
+	method configuraCarta(carta) {
+		carta.esCartaJugador(true)
+		carta.posicion(game.at(17,2))
+		self.acomodarCartaEnMesa(carta)
+		//
+	}
+	
+	method acomodarCartaEnMesa(carta) {
+		carta.posicion(carta.position().right(self.cartasJugador().size() + 1))
+	}
+	
+	method mostrarCartaEnMesa(unaCarta) {
+		game.addVisual(unaCarta)
+	}
+	
+	method agregarCartaJugador(carta){
+		cartasJugador.add(carta)
+	}	
+
+	method darCartaJugador(cartaPedida) {
+		jugador2.recibirCartaJugador(cartaPedida)
+		//cartasJugador.remove(cartaPedida)
+	}	
+	
+	method sacarCarta(carta){
+		cartasJugador.remove(carta)
+	}
+	
 	method irAPescar() {
 		mazo.darUnaCarta(self)
 	}
@@ -89,26 +116,10 @@ object jugador {
 object jugador2 {
 
 	var property cantPuntos2 = 0
-	var property cartasJugador = #{}
+	var property cartasJugador = []
 	var property posicion2 = game.origin()
 	var lista2 = #{}
-	
-//	method mostraFrenteCartas(){
-//		cartasJugador.forEach{carta=>carta.esCartaJugador(true)}
-//	}
-//	
-//	method tomaPosicion(unaPosicion){
-//		cartasJugador.forEach{carta=>carta.posicion(unaPosicion)}
-//	}
-//	
-//	method acomodarCartas() {
-//		var incrementador = 1
-//		cartasJugador.forEach{ carta =>
-//			carta.posicion(carta.position().right(incrementador))
-//		;incrementador++
-//		}
-//	}
-//
+//	var numRandom = self.tomaCualquiera()
 		
 	method paloCartas() = cartasJugador.map({ cartita => cartita.decimeTuPalo() })
 
@@ -117,17 +128,51 @@ object jugador2 {
 	method sumarPunto() {
 		cantPuntos2 += 1
 	}
+	
+	method tomaCualquiera() = cartasJugador.map{carta => carta.decimeTuNum()}.anyOne()	
+	
+	
+	
+	method pedirNum(numerito){
+		if(jugador.tenesEsteNum(numerito)){
+			self.dameCartasConEseNum(numerito)
+			//ronda.seguirJugando()
+		} else {
+			self.irAPescar()
+			//ronda.pasarTurno()
+		  }
+	}	
+	
+	method tenesEsteNum(unNumero) = (cartasJugador.map({carta=>carta.decimeTuNum()})).contains(unNumero)
+	
+	method dameCartasConEseNum(unNumero){ 
+		self.dameCartas(jugador.cartasConMismoNum(unNumero))
+	}
+	
+	method cartasConMismoNum(unNumero) = cartasJugador.filter({carta=>carta.esPareja(unNumero)})
+	
+	method dameCartas(cartas){//OK
+		cartas.forEach{carta=>jugador.darCartaJugador(carta)}
+	}
 
-	method recibirCarta(cartasAgregadas) {
-		cartasJugador.add(cartasAgregadas)
-		self.configuraCarta(cartasAgregadas)
+	method recibirCartaMazo(carta) {
+		mazo.sacarCarta(carta)
+		cartasJugador.add(carta)
+		self.configuraCarta(carta)
+		self.mostrarCartaEnMesa(carta)
+	}
+	
+	method recibirCartaJugador(carta){
+		jugador.sacarCarta(carta)
+		cartasJugador.add(carta)
+		self.configuraCarta(carta)
 	}
 	
 	method configuraCarta(unaCarta) {
-//		unaCarta.esCartaJugador(true)
+		unaCarta.esCartaJugador(false)
 		unaCarta.posicion(game.at(17,12))
 		self.acomodarCartaEnMesa(unaCarta)
-		self.mostrarCartaEnMesa(unaCarta)
+		//self.mostrarCartaEnMesa(unaCarta)
 	}
 	
 	method acomodarCartaEnMesa(unaCarta) {
@@ -137,21 +182,20 @@ object jugador2 {
 	method mostrarCartaEnMesa(unaCarta) {
 		game.addVisual(unaCarta)
 	}
+	
+	method agregarCartaJugador(carta){
+		cartasJugador.add(carta)
+	}
 
 	method cartasJugador() = cartasJugador
 
-	method darCarta(cartaPedida) {
-		cartasJugador.remove(cartaPedida)
+	method darCartaJugador(cartaPedida) {
+		jugador.recibirCartaJugador(cartaPedida)
+		//cartasJugador.remove(cartaPedida)
 	}
-
-	method pedirCartas(unaCarta) {
-		if ((jugador.cartasJugador()).contains(unaCarta)) {
-			self.recibirCarta(unaCarta)
-			ronda.seguirJugando()
-		} else {
-			self.irAPescar()
-			ronda.pasarTurno()
-		}
+	
+	method sacarCarta(carta){
+		cartasJugador.remove(carta)
 	}
 
 	method irAPescar() {
@@ -163,7 +207,6 @@ object jugador2 {
 		if (lista2.sizeOf() == 4) {
 			self.sumarPunto()
 		}
-	// que se pone 
 	}
 
 }
