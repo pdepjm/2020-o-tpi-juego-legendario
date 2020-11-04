@@ -25,7 +25,13 @@ object jugador {
 		cartasJugador.remove(cartaPedida)
 		cartasJugador.add(cartaPedida)
 	}
-
+	
+	method sacaCartas(cartas){
+		cartas.forEach{carta => cartasJugador.remove(carta)}
+	}
+	
+	method juga(){}
+	
 	method cuatroCartasIguales(numero) {
 		if ((self.cartasConMismoNum(numero)).size() == 4){ 
 			self.sumarPunto()
@@ -33,10 +39,6 @@ object jugador {
 		}	
 	}
 	
-	method sacaCartas(cartas){
-		cartas.forEach{carta => cartasJugador.remove(carta)}
-	}
-
 	method pedirNum(unNumero){
 		self.cuatroCartasIguales(unNumero)
 		if(jugador2.tenesEsteNum(unNumero)){
@@ -64,12 +66,12 @@ object jugador {
 	method recibirCartaMazo(carta) {
 		mazo.sacarCarta(carta)
 		cartasJugador.add(carta)
+		
 		self.configuraCarta(carta)
 		self.mostrarCartaEnMesa(carta)
 	}
 	
 	method recibirCartaJugador(carta){
-		jugador2.sacarCarta(carta)
 		cartasJugador.add(carta)
 		self.configuraCarta(carta)
 	}
@@ -94,8 +96,8 @@ object jugador {
 	}	
 
 	method darCartaJugador(cartaPedida) {
-		jugador2.recibirCartaJugador(cartaPedida)
-		//cartasJugador.remove(cartaPedida)
+		self.sacarCarta(cartaPedida)
+		jugador2.recibirCartaJugador(cartaPedida)	
 	}	
 	
 	method sacarCarta(carta){
@@ -113,8 +115,7 @@ object jugador2 {
 	var property cantPuntos2 = 0
 	var property cartasJugador = []
 	var property posicion2 = game.origin()
-	var lista2 = #{}
-//	var numRandom = self.tomaCualquiera()
+	var property numRandom = {numRandom = self.tomaCualquiera()}
 		
 	method paloCartas() = cartasJugador.map({ cartita => cartita.decimeTuPalo() })
 
@@ -124,18 +125,35 @@ object jugador2 {
 		cantPuntos2 += 1
 	}
 	
-	method tomaCualquiera() = cartasJugador.map{carta => carta.decimeTuNum()}.anyOne()	
+	method tomaCualquiera() = cartasJugador.map({carta => carta.decimeTuNum()}).anyOne()	
 	
+	method sacaCartas(cartas){
+		cartas.forEach{carta => cartasJugador.remove(carta)}
+	}
 	
+	method juga(){
+		numRandom.apply()
+		self.pedirNum(numRandom)
+	}
 	
-	method pedirNum(numerito){
-		if(jugador.tenesEsteNum(numerito)){
-			self.dameCartasConEseNum(numerito)
+	method cuatroCartasIguales(numero) {
+		if ((self.cartasConMismoNum(numero)).size() == 4) {
+			self.sumarPunto()
+			self.sacaCartas(self.cartasConMismoNum(numero))
+		}
+	}
+	
+	method pedirNum(unNumero){
+		self.cuatroCartasIguales(unNumero)
+		if(jugador.tenesEsteNum(unNumero)){
+			self.dameCartasConEseNum(unNumero)
 			//ronda.seguirJugando()
 		} else {
 			self.irAPescar()
 			//ronda.pasarTurno()
 		  }
+		self.cuatroCartasIguales(unNumero)
+		self.numRandom({numRandom = self.tomaCualquiera()}) 
 	}	
 	
 	method tenesEsteNum(unNumero) = (cartasJugador.map({carta=>carta.decimeTuNum()})).contains(unNumero)
@@ -146,7 +164,7 @@ object jugador2 {
 	
 	method cartasConMismoNum(unNumero) = cartasJugador.filter({carta=>carta.esPareja(unNumero)})
 	
-	method dameCartas(cartas){//OK
+	method dameCartas(cartas){
 		cartas.forEach{carta=>jugador.darCartaJugador(carta)}
 	}
 
@@ -158,7 +176,6 @@ object jugador2 {
 	}
 	
 	method recibirCartaJugador(carta){
-		jugador.sacarCarta(carta)
 		cartasJugador.add(carta)
 		self.configuraCarta(carta)
 	}
@@ -167,7 +184,6 @@ object jugador2 {
 		unaCarta.esCartaJugador(false)
 		unaCarta.posicion(game.at(17,12))
 		self.acomodarCartaEnMesa(unaCarta)
-		//self.mostrarCartaEnMesa(unaCarta)
 	}
 	
 	method acomodarCartaEnMesa(unaCarta) {
@@ -185,8 +201,8 @@ object jugador2 {
 	method cartasJugador() = cartasJugador
 
 	method darCartaJugador(cartaPedida) {
+		self.sacarCarta(cartaPedida)
 		jugador.recibirCartaJugador(cartaPedida)
-		//cartasJugador.remove(cartaPedida)
 	}
 	
 	method sacarCarta(carta){
@@ -196,14 +212,6 @@ object jugador2 {
 	method irAPescar() {
 		mazo.darUnaCarta(self)
 	}
-
-	method cuatroCartasIguales(numero) {
-		lista2 = (self.cartasJugador()).filter{ unaCarta => unaCarta.mismoNumero(numero) }
-		if (lista2.sizeOf() == 4) {
-			self.sumarPunto()
-		}
-	}
-
 }
 
 
