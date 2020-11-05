@@ -20,7 +20,7 @@ object mazo {
 	}
 
 	method creaTandaPalo(unPalo) {
-		(1..4).forEach{ value => cartasMazo.add(new Carta(palo = unPalo, num = value))}
+		(1..12).forEach{ value => cartasMazo.add(new Carta(palo = unPalo, num = value))}
 	}
 
 	method cartasEnMazo() = cartasMazo.size()
@@ -30,7 +30,7 @@ object mazo {
 	}
 
 	method repartirCartas(unJugador) {
-		new Range(start = 1, end = 4).forEach{ value => unJugador.recibirCartaMazo(cartasMazo.anyOne())}
+		new Range(start = 1, end = 7).forEach{ value => unJugador.recibirCartaMazo(cartasMazo.anyOne())}
 		//cartasMazo.removeAll(unJugador.cartasJugador())
 	}
 

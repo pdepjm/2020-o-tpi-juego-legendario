@@ -45,14 +45,21 @@ object jugador {
 		self.cuatroCartasIguales(unNumero)
 		if(jugador2.tenesEsteNum(unNumero)){
 			self.dameCartasConEseNum(unNumero)	
-			//ronda.seguirJugando()
+			self.finPartida()
+			ronda.seguirJugando()
 		} else {
 			self.irAPescar()
 			self.juli(cartasJugador.last())
-			//ronda.pasarTurno()
+			self.finPartida()
+			ronda.pasarTurno()
 		  }
 		self.cuatroCartasIguales(cartasJugador.last().decimeTuNum())  
 	}
+	
+	method finPartida(){
+		if(self.cantPuntos() == 1){
+			throw new Exception(message = "JUEGO TERMINADO SOS UN GANADOR") 
+		}}
 	
 	method tenesEsteNum(unNumero) = (cartasJugador.map({carta=>carta.decimeTuNum()})).contains(unNumero)
 	
