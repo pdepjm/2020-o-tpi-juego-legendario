@@ -21,14 +21,17 @@ import jugadores.*
 //	game.start()
 //}
 
-program inciar {
+program iniciar{
 	
 	game.width(40)
 	game.height(20)
 	game.title("Go Fish")
 	ronda.comenzarJuego()
+	
+	
 
-	keyboard.num1().onPressDo({jugador.pedirNum(1)})
+	
+ 	keyboard.num1().onPressDo({jugador.pedirNum(1)})
 	keyboard.num2().onPressDo({jugador.pedirNum(2)})
 	keyboard.num3().onPressDo({jugador.pedirNum(3)})
 	keyboard.num4().onPressDo({jugador.pedirNum(4)})
@@ -39,11 +42,11 @@ program inciar {
 	keyboard.num9().onPressDo({jugador.pedirNum(9)})
 	keyboard.j().onPressDo({jugador.pedirNum(10)})
 	keyboard.k().onPressDo({jugador.pedirNum(11)})
-	keyboard.q().onPressDo({jugador.pedirNum(12)})
+	keyboard.q().onPressDo({jugador.pedirNum(12)}) 
 	
 	//keyboard.space().onPressDo({ronda.comenzarJuego()})
 	keyboard.enter().onPressDo({ronda.seguirJugando()})
-	
+	keyboard.space().onPressDo({ronda.pasarTurno()})
 //	keyboard.up().onPressDo({tateti.cambioModoPrimero()})
 //	keyboard.down().onPressDo({tateti.cambioModoUltimo()})
 //

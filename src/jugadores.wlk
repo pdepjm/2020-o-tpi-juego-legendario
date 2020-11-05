@@ -10,6 +10,9 @@ object jugador {
 	const property cartasJugador = []
 	var property posicion = game.origin()
 
+	
+
+	
 	method paloCartas() = cartasJugador.map({ cartita => cartita.decimeTuPalo() }) 
 	
 	method numCartas() = cartasJugador.map({ unaCarta => unaCarta.decimeTuNum() }) 
