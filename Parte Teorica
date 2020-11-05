@@ -1,1 +1,15 @@
 
+El mensaje polimorfico es juli(unaCarta) y method juga(), y los objectos que lo implementan son ambos jugadores, y quien lo aprovecharia seria el jugador de turno.
+Las colecciones las utilizamos en las cartas de los dos jugadores, y del mazo. Algunas operaciones que utilizamos fueron: add, remove, forEach, size, filter, map, anyone, etc.
+Si usamos mensajes con colecciones con efectos y sin efectos, por ejemplo sin efecto usamos cartasConMismoNum que devuelve todas las cartas que son pareja con un filter,
+y por ejemplo con efecto usamos darCartaJugador la cual como su nombre lo dice utiliza dos mensajes de efecto (sacarCarta y recibirCartaJugador).
+Consideramos usar clases con los jugadores pero no lo hicimos ya que en nuestra logica debemos estar haciendo constantes referencias al oponente.
+Usamos clases en las cartas porque necesitabamos 12 cartas por cada palo y por su similutd esto nos facilito no tener que modelar 48 cartas por separado, estas las instanciamos
+cuando generamos todas las cartas en el mazo y luego las repartimos.
+Consideramos que el jugador maquina podia ser una herencia del jugador usuario, pero a la hora de hacerlo nos dimos cuenta que los jugadores no tenian el mismo comportamiento
+y si bien sus metodos eran similares, tenian dos comportamientos totalmente distintos ya que el usuario funciona de manera manual y la maquina de manera aleatoria, y ademas de eso
+nos hacia ruido que el jugador maquina herede los comportamientos del jugador usuario.
+En nuestro caso no nos convenia usar composicion ya que solo teniamos dos jugadores, y al ser un juego estatico estos no pueden ser reemplazados.
+
+
+
