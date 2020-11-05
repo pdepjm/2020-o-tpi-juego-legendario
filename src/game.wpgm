@@ -28,9 +28,6 @@ program iniciar{
 	game.title("Go Fish")
 	ronda.comenzarJuego()
 	
-	
-
-	
  	keyboard.num1().onPressDo({jugador.pedirNum(1)})
 	keyboard.num2().onPressDo({jugador.pedirNum(2)})
 	keyboard.num3().onPressDo({jugador.pedirNum(3)})
