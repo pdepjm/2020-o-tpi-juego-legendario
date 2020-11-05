@@ -47,9 +47,6 @@ program iniciar{
 	//keyboard.space().onPressDo({ronda.comenzarJuego()})
 	keyboard.enter().onPressDo({ronda.seguirJugando()})
 	keyboard.space().onPressDo({ronda.pasarTurno()})
-//	keyboard.up().onPressDo({tateti.cambioModoPrimero()})
-//	keyboard.down().onPressDo({tateti.cambioModoUltimo()})
-//
-//	tateti.iniciar()
+
 	game.start()
 }

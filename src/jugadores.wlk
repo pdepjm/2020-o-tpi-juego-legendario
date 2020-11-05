@@ -38,6 +38,8 @@ object jugador {
 		if ((self.cartasConMismoNum(numero)).size() == 4){ 
 			self.sumarPunto()
 			self.sacaCartas(self.cartasConMismoNum(numero))
+			game.removeVisual(self.cartasConMismoNum(numero))
+			
 		}	
 	}
 	
@@ -155,7 +157,13 @@ object jugador2 {
 		if ((self.cartasConMismoNum(numero)).size() == 4) {
 			self.sumarPunto()
 			self.sacaCartas(self.cartasConMismoNum(numero))
+			self.sacameCartasVisual(self.cartasConMismoNum(numero))
+			
 		}
+	}
+	
+	method sacameCartasVisual(cartas){
+		cartas.forEach{carta => game.removeVisual(carta)}
 	}
 	
 	method juli(carta){
