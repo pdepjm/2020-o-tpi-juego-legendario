@@ -86,10 +86,11 @@ object ronda{
 	}	
 	
 	method seguirJugando(){
-		quienJuega.first().pedirNum()
+		quienJuega.first().juga()
 	}
 	
 	method comenzarJuego(){
+		mazo.cargaPalos()
 		mazo.repartirCartas(jugador)
 		mazo.repartirCartas(jugador2)	
 	}

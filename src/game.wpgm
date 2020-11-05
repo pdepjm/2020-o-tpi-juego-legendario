@@ -2,21 +2,51 @@ import wollok.game.*
 import cartas.*
 import ronda.*
 import jugadores.*
+//
+//program ejemplo{
+//	game.width(40)
+//	game.height(20)
+//	game.title("Go Fish")
+//	game.addVisual(mazo)
+//	mazo.cargaPalos()
+//	ronda.comenzarJuego()
+////	jugador.irAPescar()
+////	jugador.irAPescar()
+////	jugador2.irAPescar()
+////	jugador.pedirNum(3)
+////	jugador.pedirNum(2)
+//	jugador2.pedirNum(2)
+//	jugador2.pedirNum(1)
+//	
+//	game.start()
+//}
 
-program ejemplo{
+program inciar {
+	
 	game.width(40)
 	game.height(20)
 	game.title("Go Fish")
-	game.addVisual(mazo)
-	mazo.cargaPalos()
 	ronda.comenzarJuego()
-//	jugador.irAPescar()
-//	jugador.irAPescar()
-//	jugador2.irAPescar()
-//	jugador.pedirNum(3)
-//	jugador.pedirNum(2)
-	jugador2.pedirNum(2)
-	jugador2.pedirNum(1)
+
+	keyboard.num1().onPressDo({jugador.pedirNum(1)})
+	keyboard.num2().onPressDo({jugador.pedirNum(2)})
+	keyboard.num3().onPressDo({jugador.pedirNum(3)})
+	keyboard.num4().onPressDo({jugador.pedirNum(4)})
+	keyboard.num5().onPressDo({jugador.pedirNum(5)})
+	keyboard.num6().onPressDo({jugador.pedirNum(6)})
+	keyboard.num7().onPressDo({jugador.pedirNum(7)})
+	keyboard.num8().onPressDo({jugador.pedirNum(8)})
+	keyboard.num9().onPressDo({jugador.pedirNum(9)})
+	keyboard.j().onPressDo({jugador.pedirNum(10)})
+	keyboard.k().onPressDo({jugador.pedirNum(11)})
+	keyboard.q().onPressDo({jugador.pedirNum(12)})
 	
+	//keyboard.space().onPressDo({ronda.comenzarJuego()})
+	keyboard.enter().onPressDo({ronda.seguirJugando()})
+	
+//	keyboard.up().onPressDo({tateti.cambioModoPrimero()})
+//	keyboard.down().onPressDo({tateti.cambioModoUltimo()})
+//
+//	tateti.iniciar()
 	game.start()
 }

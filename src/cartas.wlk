@@ -71,6 +71,3 @@ class Carta {
 	//method esPareja(otraCarta) = true
 
 }
-
-
-

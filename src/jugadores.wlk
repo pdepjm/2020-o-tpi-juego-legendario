@@ -9,11 +9,10 @@ object jugador {
 	var property cantPuntos = 0
 	const property cartasJugador = []
 	var property posicion = game.origin()
-//	var lista 
 
-	method paloCartas() = cartasJugador.map({ cartita => cartita.decimeTuPalo() }) // decime tu palo y num para ver 
-
-	method numCartas() = cartasJugador.map({ unaCarta => unaCarta.decimeTuNum() }) // que cartas tienen los jugadores
+	method paloCartas() = cartasJugador.map({ cartita => cartita.decimeTuPalo() }) 
+	
+	method numCartas() = cartasJugador.map({ unaCarta => unaCarta.decimeTuNum() }) 
 
 	method sumarPunto() {
 		cantPuntos += 1
@@ -42,13 +41,14 @@ object jugador {
 	method pedirNum(unNumero){
 		self.cuatroCartasIguales(unNumero)
 		if(jugador2.tenesEsteNum(unNumero)){
-			self.dameCartasConEseNum(unNumero)
+			self.dameCartasConEseNum(unNumero)	
 			//ronda.seguirJugando()
 		} else {
 			self.irAPescar()
+			self.juli(cartasJugador.last())
 			//ronda.pasarTurno()
 		  }
-		self.cuatroCartasIguales(unNumero)  
+		self.cuatroCartasIguales(cartasJugador.last().decimeTuNum())  
 	}
 	
 	method tenesEsteNum(unNumero) = (cartasJugador.map({carta=>carta.decimeTuNum()})).contains(unNumero)
@@ -56,19 +56,24 @@ object jugador {
 	method dameCartasConEseNum(unNumero){ 
 		self.dameCartas(jugador2.cartasConMismoNum(unNumero))
 	}
-			// OK
+		
 	method cartasConMismoNum(unNumero) = cartasJugador.filter({carta=>carta.esPareja(unNumero)})
 	
-	method dameCartas(cartas){//OK
+	method dameCartas(cartas){
 		cartas.forEach{carta=>jugador2.darCartaJugador(carta)}
 	}
 
 	method recibirCartaMazo(carta) {
 		mazo.sacarCarta(carta)
-		cartasJugador.add(carta)
-		
+		cartasJugador.add(carta)		
 		self.configuraCarta(carta)
 		self.mostrarCartaEnMesa(carta)
+	}
+	
+	method juli(carta){
+		if (carta.decimeTuNum() == 1){
+			self.sumarPunto()
+		}
 	}
 	
 	method recibirCartaJugador(carta){
@@ -143,6 +148,12 @@ object jugador2 {
 		}
 	}
 	
+	method juli(carta){
+		if(carta.decimeTuNum() == 1){
+			self.irAPescar()
+		}
+	}
+	
 	method pedirNum(unNumero){
 		self.cuatroCartasIguales(unNumero)
 		if(jugador.tenesEsteNum(unNumero)){
@@ -150,9 +161,10 @@ object jugador2 {
 			//ronda.seguirJugando()
 		} else {
 			self.irAPescar()
+			self.juli(cartasJugador.last())
 			//ronda.pasarTurno()
 		  }
-		self.cuatroCartasIguales(unNumero)
+		self.cuatroCartasIguales(cartasJugador.last().decimeTuNum())
 		self.numRandom({numRandom = self.tomaCualquiera()}) 
 	}	
 	
@@ -173,6 +185,9 @@ object jugador2 {
 		cartasJugador.add(carta)
 		self.configuraCarta(carta)
 		self.mostrarCartaEnMesa(carta)
+		if (carta.decimeTuNum() == 1){
+			self.sumarPunto()
+		}
 	}
 	
 	method recibirCartaJugador(carta){
@@ -213,5 +228,3 @@ object jugador2 {
 		mazo.darUnaCarta(self)
 	}
 }
-
-
