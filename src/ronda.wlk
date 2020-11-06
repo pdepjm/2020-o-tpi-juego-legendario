@@ -27,9 +27,12 @@ object ronda{
 		mazo.cargaPalos()
 		mazo.repartirCartas(jugador)
 		mazo.repartirCartas(jugador2)
-		marcadorJugador.mostrate()
-		marcadorMaquina.mostrate()		
+		self.mostrarMarcadores(quienJuega)	
 	}
+	
+	method mostrarMarcadores(jugadores){
+			jugadores.forEach{unJugador=>unJugador.mostraPuntosEnVisual()}
+	}			
 	
 	method posicionEnMesa(){
 		quienJuega.first().tomaPosicion(game.at(17,2))
@@ -42,22 +45,15 @@ object ronda{
 	}
 }
 
-object marcadorJugador{
+class Marcador{
+	var property posicion = game.at(35,2)
 	var property numPunto = 0
+	
+	method position()= posicion 
 	
 	method mostrate(){game.addVisual(self)}
 	
-	method position()= game.at(35,2)
-	
-	method image() = "punto"+numPunto+".png" 
+	method image() = "punto"+numPunto+".png"
 }
 
-object marcadorMaquina{
-	var property numPunto = 0
-	
-	method mostrate(){game.addVisual(self)}
-	
-	method position()= game.at(35,15)
-	
-	method image() = "punto"+numPunto+".png"	
-}
+

@@ -7,11 +7,15 @@ object jugador {
 
 	var property cantPuntos = 0
 	const property cartasJugador = []
-	const marcador = marcadorJugador
+	const marcador = new Marcador()
 
 	method paloCartas() = cartasJugador.map({ cartita => cartita.decimeTuPalo() }) 
 	
 	method numCartas() = cartasJugador.map({ unaCarta => unaCarta.decimeTuNum() }) 
+
+	method mostraPuntosEnVisual(){
+		marcador.mostrate()
+	}
 
 	method sumarPunto() {
 		cantPuntos += 1
@@ -128,12 +132,16 @@ object jugador2 {
 
 	var property cantPuntos = 0
 	var property cartasJugador = []
-	const marcador = marcadorMaquina
+	const marcador = new Marcador(posicion = game.at(35,15))
 	var property numRandom = {numRandom = self.tomaCualquiera()}
 		
 	method paloCartas() = cartasJugador.map({ cartita => cartita.decimeTuPalo() })
 
 	method numCartas() = cartasJugador.map({ unaCarta => unaCarta.decimeTuNum() })
+
+	method mostraPuntosEnVisual(){
+		marcador.mostrate()
+	}	
 
 	method sumarPunto() {
 		cantPuntos += 1
