@@ -7,9 +7,9 @@ object mazo {
 	const property cartasMazo = []
 	const palos = [ "basto", "oro", "copa", "espada" ]
 
-	method position() = game.at(2,2)
+	method position() = game.at(8,8)
 
-	method image() = "posterior.png"
+	method image() = "posteriorMazo.png"
 
 	method cargaPalos() {
 		palos.forEach({ palo => self.creaTandaPalo(palo)})
@@ -55,7 +55,7 @@ class Carta {
 	method image() {
 		return if (self.esCartaJugador())
 		palo + num + ".png"
-	else "posteriorCartaEnJuego.png"
+	else "posteriorCarta.png"
 	}
 
 	method esCartaJugador() = esCartaJugador  
