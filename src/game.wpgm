@@ -2,24 +2,6 @@ import wollok.game.*
 import cartas.*
 import ronda.*
 import jugadores.*
-//
-//program ejemplo{
-//	game.width(40)
-//	game.height(20)
-//	game.title("Go Fish")
-//	game.addVisual(mazo)
-//	mazo.cargaPalos()
-//	ronda.comenzarJuego()
-////	jugador.irAPescar()
-////	jugador.irAPescar()
-////	jugador2.irAPescar()
-////	jugador.pedirNum(3)
-////	jugador.pedirNum(2)
-//	jugador2.pedirNum(2)
-//	jugador2.pedirNum(1)
-//	
-//	game.start()
-//}
 
 program iniciar{
 	

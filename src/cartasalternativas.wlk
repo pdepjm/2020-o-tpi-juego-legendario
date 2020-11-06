@@ -1,9 +1,0 @@
-object abc {
-	
-	
-}
-
-class Cartas{
-	
-	
-} 

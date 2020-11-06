@@ -3,22 +3,19 @@ import cartas.*
 import ronda.*
 
 
-
 object jugador {
 
 	var property cantPuntos = 0
 	const property cartasJugador = []
-	var property posicion = game.origin()
+	const marcador = marcadorJugador
 
-	
-
-	
 	method paloCartas() = cartasJugador.map({ cartita => cartita.decimeTuPalo() }) 
 	
 	method numCartas() = cartasJugador.map({ unaCarta => unaCarta.decimeTuNum() }) 
 
 	method sumarPunto() {
 		cantPuntos += 1
+		marcador.numPunto(cantPuntos)
 	}
 
 	method cartasJugador() = cartasJugador
@@ -129,9 +126,9 @@ object jugador {
 
 object jugador2 {
 
-	var property cantPuntos2 = 0
+	var property cantPuntos = 0
 	var property cartasJugador = []
-	var property posicion2 = game.origin()
+	const marcador = marcadorMaquina
 	var property numRandom = {numRandom = self.tomaCualquiera()}
 		
 	method paloCartas() = cartasJugador.map({ cartita => cartita.decimeTuPalo() })
@@ -139,7 +136,8 @@ object jugador2 {
 	method numCartas() = cartasJugador.map({ unaCarta => unaCarta.decimeTuNum() })
 
 	method sumarPunto() {
-		cantPuntos2 += 1
+		cantPuntos += 1
+		marcador.numPunto(cantPuntos)
 	}
 	
 	method tomaCualquiera() = cartasJugador.map({carta => carta.decimeTuNum()}).anyOne()	
@@ -157,8 +155,7 @@ object jugador2 {
 		if ((self.cartasConMismoNum(numero)).size() == 4) {
 			self.sumarPunto()
 			self.sacaCartas(self.cartasConMismoNum(numero))
-			self.sacameCartasVisual(self.cartasConMismoNum(numero))
-			
+			self.sacameCartasVisual(self.cartasConMismoNum(numero))	
 		}
 	}
 	

@@ -63,7 +63,4 @@ class Carta {
 	method position() = posicion
 
 	method esPareja(unNumero) = self.decimeTuNum() == unNumero 
-
-	//method esPareja(otraCarta) = true
-
 }

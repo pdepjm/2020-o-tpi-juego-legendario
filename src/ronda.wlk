@@ -7,11 +7,9 @@ import cartas.*
 object ronda{
 	const quienJuega = [jugador, jugador2]
 	var elQueEstabaJugando
-	//var elQueJuega
 	
 	method elQueLeToca(){
-		return quienJuega.first()
-		
+		return quienJuega.first()	
 	}
 	
 	method pasarTurno(){
@@ -28,29 +26,10 @@ object ronda{
 	method comenzarJuego(){
 		mazo.cargaPalos()
 		mazo.repartirCartas(jugador)
-		mazo.repartirCartas(jugador2)	
+		mazo.repartirCartas(jugador2)
+		marcadorJugador.mostrate()
+		marcadorMaquina.mostrate()		
 	}
-	
-	method jugadoresPresentarse(){
-		self.tomenSuPosicion()
-		
-//		self.ocultaTusCartas(quienJuega.last())
-	}
-	
-//	method ocultaTusCartas(contrincante){
-//		contrincante.
-//	}
-	
-	method tomenSuPosicion(){
-//		self.configurenCartasJugadores()
-		self.posicionEnMesa()
-	}
-	
-//	method configurenCartasJugadores(){
-//		self.dameJugadorPpal().mostraFrenteCartas()
-//	}
-	
-//	method dameJugadorPpal() = quienJuega.first()
 	
 	method posicionEnMesa(){
 		quienJuega.first().tomaPosicion(game.at(17,2))
@@ -61,4 +40,24 @@ object ronda{
 		quienJuega.first().contrincante(quienJuega.last())
 		quienJuega.last().contrincante(quienJuega.first()) 
 	}
+}
+
+object marcadorJugador{
+	var property numPunto = 0
+	
+	method mostrate(){game.addVisual(self)}
+	
+	method position()= game.at(35,2)
+	
+	method image() = "punto"+numPunto+".png" 
+}
+
+object marcadorMaquina{
+	var property numPunto = 0
+	
+	method mostrate(){game.addVisual(self)}
+	
+	method position()= game.at(35,15)
+	
+	method image() = "punto"+numPunto+".png"	
 }
