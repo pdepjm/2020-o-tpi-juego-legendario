@@ -39,10 +39,13 @@ object jugador {
 		if ((self.cartasConMismoNum(numero)).size() == 4){ 
 			self.sumarPunto()
 			self.sacaCartas(self.cartasConMismoNum(numero))
-			game.removeVisual(self.cartasConMismoNum(numero))
-			
+			self.sacameCartasVisual(self.cartasConMismoNum(numero))
 		}	
 	}
+	
+	method sacameCartasVisual(cartas){
+		cartas.forEach{carta => game.removeVisual(carta)}
+	}	
 	
 	method pedirNum(unNumero){
 		self.cuatroCartasIguales(unNumero)
@@ -98,7 +101,6 @@ object jugador {
 		carta.esCartaJugador(true)
 		carta.posicion(game.at(17,2))
 		self.acomodarCartaEnMesa(carta)
-		//
 	}
 	
 	method acomodarCartaEnMesa(carta) {
@@ -181,11 +183,11 @@ object jugador2 {
 		self.cuatroCartasIguales(unNumero)
 		if(jugador.tenesEsteNum(unNumero)){
 			self.dameCartasConEseNum(unNumero)
-			//ronda.seguirJugando()
+			ronda.seguirJugando()
 		} else {
 			self.irAPescar()
 			self.juli(cartasJugador.last())
-			//ronda.pasarTurno()
+			ronda.pasarTurno()
 		  }
 		self.cuatroCartasIguales(cartasJugador.last().decimeTuNum())
 		self.numRandom({numRandom = self.tomaCualquiera()}) 
