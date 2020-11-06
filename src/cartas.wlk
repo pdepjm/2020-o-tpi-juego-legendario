@@ -7,13 +7,9 @@ object mazo {
 	const property cartasMazo = []
 	const palos = [ "basto", "oro", "copa", "espada" ]
 
-	method position() = game.origin()
+	method position() = game.at(2,2)
 
 	method image() = "posterior.png"
-
-	method paloCartas() = cartasMazo.map({ cartita => cartita.decimeTuPalo() }) // paloCartas y numCartas para ver que no se repitan
-
-	method numCartas() = cartasMazo.map({ cartita => cartita.decimeTuNum() })
 
 	method cargaPalos() {
 		palos.forEach({ palo => self.creaTandaPalo(palo)})
@@ -26,12 +22,11 @@ object mazo {
 	method cartasEnMazo() = cartasMazo.size()
 
 	method repartilesCartas(jugadores) {
-		jugadores.forEach{ unJugador => self.repartirCartas(unJugador)} // agrego esta funcion que recibe los jugadores de ronda
+		jugadores.forEach{ unJugador => self.repartirCartas(unJugador)} 
 	}
 
 	method repartirCartas(unJugador) {
 		new Range(start = 1, end = 7).forEach{ value => unJugador.recibirCartaMazo(cartasMazo.anyOne())}
-		//cartasMazo.removeAll(unJugador.cartasJugador())
 	}
 
 	method sacarCarta(carta){
@@ -40,8 +35,9 @@ object mazo {
 	
 	method darUnaCarta(unJugador) {
 		unJugador.recibirCartaMazo(cartasMazo.anyOne())
-		//cartasMazo.removeAll(unJugador.cartasJugador()) // elimino la carta del mazo
 	}
+	
+	method mostrate() = game.addVisual(self)
 
 }
 

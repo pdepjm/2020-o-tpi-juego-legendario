@@ -27,6 +27,8 @@ program iniciar{
 	game.height(20)
 	game.title("Go Fish")
 	ronda.comenzarJuego()
+	game.ground("fondoMesa.png")
+	mazo.mostrate()
 	
  	keyboard.num1().onPressDo({jugador.pedirNum(1)})
 	keyboard.num2().onPressDo({jugador.pedirNum(2)})
