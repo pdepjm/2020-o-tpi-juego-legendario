@@ -45,8 +45,36 @@ object ronda{
 	}
 }
 
+object reglasLocas{
+	
+	method evaluarReglasLocas(elQJuega,carta){
+		self.reglaLoca1(elQJuega,carta)
+		self.reglaLoca2(elQJuega,carta)
+		self.reglaLoca3(elQJuega,carta)
+	}
+	
+	method reglaLoca1(elQJuega,carta){
+		if (carta.decimeTuNum() == 1){
+			elQJuega.sumarPunto()
+		}
+	}
+	
+	method reglaLoca2(elQJuega, carta){
+		if(carta.decimeTuNum() == 2){
+			elQJuega.irAPescar()
+		}
+	}
+	
+	method reglaLoca3(elQJuega, carta){
+		if(carta.decimeTuNum() == 3){
+			elQJuega.sumarPunto()
+			elQJuega.sumarPunto()
+		}
+	}	
+	
+}
 class Marcador{
-	var property posicion = game.at(35,2)
+	var property posicion = game.at(35,4)
 	var property numPunto = 0
 	
 	method position()= posicion 
@@ -56,11 +84,5 @@ class Marcador{
 	method image() = "punto"+numPunto+".png"
 }
 
-class Error{
-	var property posicion = game.at(25,9)
-	method position() = posicion
-	
-	method mostrate(){game.addVisual(self)}
-	method image() = "error.png"	
-}
+
 

@@ -45,7 +45,7 @@ object jugador {
 	}
 	
 	method sacameCartasVisual(cartas){
-		cartas.forEach{carta => game.removeVisual(carta)}
+		cartas.map{carta => game.removeVisual(carta)}
 	}	
 	
 	method pedirNum(unNumero){
@@ -60,7 +60,7 @@ object jugador {
 			ronda.seguirJugando()
 		} else {
 			self.irAPescar()
-			self.juli(cartasJugador.last())
+			reglasLocas.evaluarReglasLocas(self, cartasJugador.last())
 			self.finPartida()
 			ronda.pasarTurno()
 		  }
@@ -91,11 +91,7 @@ object jugador {
 		self.mostrarCartaEnMesa(carta)
 	}
 	
-	method juli(carta){
-		if (carta.decimeTuNum() == 1){
-			self.sumarPunto()
-		}
-	}
+		
 	
 	method recibirCartaJugador(carta){
 		cartasJugador.add(carta)
