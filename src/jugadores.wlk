@@ -61,6 +61,7 @@ object jugador {
 			self.finPartida()
 			ronda.seguirJugando()
 		} else {
+			game.sound("efectopescar.mp3")
 			self.irAPescar()
 			reglasLocas.evaluarReglasLocas(self, cartasJugador.last())
 			self.finPartida()
