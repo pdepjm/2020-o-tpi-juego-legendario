@@ -50,6 +50,7 @@ object jugador {
 	}	
 	
 	method pedirNum(unNumero){
+		
 		if(!self.tenesEsteNum(unNumero)){
 			game.errorReporter(self)
 			ronda.seguirJugando()
@@ -166,8 +167,9 @@ object jugador2 {
 	method cuatroCartasIguales(numero) {
 		if ((self.cartasConMismoNum(numero)).size() == 4) {
 			self.sumarPunto()
-			self.sacaCartas(self.cartasConMismoNum(numero))
 			self.sacameCartasVisual(self.cartasConMismoNum(numero))	
+			self.sacaCartas(self.cartasConMismoNum(numero))
+			
 		}
 	}
 	
@@ -188,7 +190,7 @@ object jugador2 {
 			ronda.seguirJugando()
 		} else {
 			self.irAPescar()
-			self.juli(cartasJugador.last())
+			reglasLocas.evaluarReglasLocas(self, cartasJugador.last())
 			ronda.pasarTurno()
 		  }
 		self.cuatroCartasIguales(cartasJugador.last().decimeTuNum())
@@ -255,3 +257,7 @@ object jugador2 {
 		mazo.darUnaCarta(self)
 	}
 }
+
+
+
+
