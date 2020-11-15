@@ -8,7 +8,7 @@ object jugador {
 	var property cantPuntos = 0
 	const property cartasJugador = []
 	const marcador = new Marcador()
-
+	
 	method paloCartas() = cartasJugador.map({ cartita => cartita.decimeTuPalo() }) 
 	
 	method numCartas() = cartasJugador.map({ unaCarta => unaCarta.decimeTuNum() }) 
@@ -16,6 +16,7 @@ object jugador {
 	method mostraPuntosEnVisual(){
 		marcador.mostrate()
 	}
+	
 
 	method sumarPunto() {
 		cantPuntos += 1
@@ -48,6 +49,10 @@ object jugador {
 	}	
 	
 	method pedirNum(unNumero){
+		if(!self.tenesEsteNum(unNumero)){
+			game.errorReporter(self)
+			ronda.seguirJugando()
+		}
 		self.cuatroCartasIguales(unNumero)
 		if(jugador2.tenesEsteNum(unNumero)){
 			self.dameCartasConEseNum(unNumero)	

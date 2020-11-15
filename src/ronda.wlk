@@ -56,4 +56,11 @@ class Marcador{
 	method image() = "punto"+numPunto+".png"
 }
 
+class Error{
+	var property posicion = game.at(25,9)
+	method position() = posicion
+	
+	method mostrate(){game.addVisual(self)}
+	method image() = "error.png"	
+}
 
