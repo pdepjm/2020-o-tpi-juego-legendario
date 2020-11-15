@@ -35,8 +35,8 @@ object ronda{
 	}			
 	
 	method posicionEnMesa(){
-		quienJuega.first().tomaPosicion(game.at(17,2))
-		quienJuega.last().tomaPosicion(game.at(17,12))
+		quienJuega.first().tomaPosicion(game.at(14,2))
+		quienJuega.last().tomaPosicion(game.at(14,12))
 	}
 	
 	method asignaContrincantes(){

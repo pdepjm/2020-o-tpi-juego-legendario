@@ -39,8 +39,9 @@ object jugador {
 	method cuatroCartasIguales(numero) {
 		if ((self.cartasConMismoNum(numero)).size() == 4){ 
 			self.sumarPunto()
-			self.sacaCartas(self.cartasConMismoNum(numero))
 			self.sacameCartasVisual(self.cartasConMismoNum(numero))
+			self.sacaCartas(self.cartasConMismoNum(numero))
+			
 		}	
 	}
 	
