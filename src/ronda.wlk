@@ -5,7 +5,7 @@ import cartas.*
 
 
 object ronda{
-	const quienJuega = [jugador, jugador2]
+	const quienJuega = [usuario, bot]
 	var elQueEstabaJugando
 	
 	method elQueLeToca(){
@@ -25,8 +25,9 @@ object ronda{
 	
 	method comenzarJuego(){
 		mazo.cargaPalos()
-		mazo.repartirCartas(jugador)
-		mazo.repartirCartas(jugador2)
+		mazo.repartirCartas(usuario)
+		mazo.repartirCartas(bot)
+		self.asignaOponentes()
 		self.mostrarMarcadores(quienJuega)	
 	}
 	
@@ -39,9 +40,9 @@ object ronda{
 		quienJuega.last().tomaPosicion(game.at(14,12))
 	}
 	
-	method asignaContrincantes(){
-		quienJuega.first().contrincante(quienJuega.last())
-		quienJuega.last().contrincante(quienJuega.first()) 
+	method asignaOponentes(){
+		quienJuega.first().oponente(quienJuega.last())
+		quienJuega.last().oponente(quienJuega.first()) 
 	}
 }
 

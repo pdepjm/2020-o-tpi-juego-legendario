@@ -2,11 +2,17 @@ import wollok.game.*
 import cartas.*
 import ronda.*
 
-object jugador {
+class Jugador {
 
 	var property cantPuntos = 0
 	const property cartasJugador = []
 	const marcador = new Marcador()
+	var property oponente
+
+	method darCarta(cartaPedida) {
+		cartasJugador.remove(cartaPedida)
+		cartasJugador.add(cartaPedida)
+	}
 
 	method numCartas() = cartasJugador.map({ unaCarta => unaCarta.decimeTuNum() })
 
@@ -19,16 +25,8 @@ object jugador {
 		marcador.numPunto(cantPuntos)
 	}
 
-	method darCarta(cartaPedida) {
-		cartasJugador.remove(cartaPedida)
-		cartasJugador.add(cartaPedida)
-	}
-
 	method sacaCartas(cartas) {
 		cartas.forEach{ carta => cartasJugador.remove(carta)}
-	}
-
-	method juga() {
 	}
 
 	method cuatroCartasIguales(numero) {
@@ -43,27 +41,6 @@ object jugador {
 		cartas.map{ carta => game.removeVisual(carta)}
 	}
 
-	method pedirNum(unNumero) {
-		if (!self.tenesEsteNum(unNumero)) {
-//			game.errorReporter(self)
-			self.error("NO PODES PEDIR EL " + unNumero)
-			ronda.seguirJugando()
-		}
-		self.cuatroCartasIguales(unNumero)
-		if (jugador2.tenesEsteNum(unNumero)) {
-			self.dameCartasConEseNum(unNumero)
-			self.finPartida()
-			ronda.seguirJugando()
-		} else {
-			game.sound("efectopescar.mp3")
-			self.irAPescar()
-			reglasLocas.evaluarReglasLocas(self, cartasJugador.last())
-			self.finPartida()
-			ronda.pasarTurno()
-		}
-		self.cuatroCartasIguales(cartasJugador.last().decimeTuNum())
-	}
-
 	method finPartida() {
 		if (self.cantPuntos() == 4) {
 			throw new Exception(message = "JUEGO TERMINADO SOS UN GANADOR")
@@ -72,15 +49,7 @@ object jugador {
 
 	method tenesEsteNum(unNumero) = (cartasJugador.map({ carta => carta.decimeTuNum() })).contains(unNumero)
 
-	method dameCartasConEseNum(unNumero) {
-		self.dameCartas(jugador2.cartasConMismoNum(unNumero))
-	}
-
 	method cartasConMismoNum(unNumero) = cartasJugador.filter({ carta => carta.esPareja(unNumero) })
-
-	method dameCartas(cartas) {
-		cartas.forEach{ carta => jugador2.darCartaJugador(carta)}
-	}
 
 	method recibirCartaMazo(carta) {
 		mazo.sacarCarta(carta)
@@ -89,15 +58,15 @@ object jugador {
 		self.mostrarCartaEnMesa(carta)
 	}
 
-	method recibirCartaJugador(carta) {
-		cartasJugador.add(carta)
-		self.configuraCarta(carta)
-	}
-
 	method configuraCarta(carta) {
 		carta.esCartaJugador(true)
 		carta.posicion(game.at(11, 2))
 		self.acomodarCartaEnMesa(carta)
+	}
+
+	method recibirCartaJugador(carta) {
+		cartasJugador.add(carta)
+		self.configuraCarta(carta)
 	}
 
 	method acomodarCartaEnMesa(carta) {
@@ -114,7 +83,7 @@ object jugador {
 
 	method darCartaJugador(cartaPedida) {
 		self.sacarCarta(cartaPedida)
-		jugador2.recibirCartaJugador(cartaPedida)
+		oponente.recibirCartaJugador(cartaPedida)
 	}
 
 	method sacarCarta(carta) {
@@ -124,65 +93,57 @@ object jugador {
 	method irAPescar() {
 		mazo.darUnaCarta(self)
 	}
+	
+	method dameCartasConEseNum(unNumero) {}
 
 }
 
-object jugador2 {
+object usuario inherits Jugador {
 
-	var property cantPuntos = 0
-	var property cartasJugador = []
-	const marcador = new Marcador(posicion = game.at(35, 15))
+	method pedirNum(unNumero) {
+		if (!self.tenesEsteNum(unNumero)) {
+//			game.errorReporter(self)
+			self.error("NO PODES PEDIR EL " + unNumero)
+			ronda.seguirJugando()
+		}
+		self.cuatroCartasIguales(unNumero)
+		if (oponente.tenesEsteNum(unNumero)) {
+			self.dameCartasConEseNum(unNumero)
+			self.finPartida()
+			ronda.seguirJugando()
+		} else {
+			game.sound("efectopescar.mp3")
+			self.irAPescar()
+			reglasLocas.evaluarReglasLocas(self, cartasJugador.last())
+			self.finPartida()
+			ronda.pasarTurno()
+		}
+		self.cuatroCartasIguales(cartasJugador.last().decimeTuNum())
+	}
+
+	override method dameCartasConEseNum(unNumero) {
+		self.dameCartas(oponente.cartasConMismoNum(unNumero))
+	}
+
+	method dameCartas(cartas) {
+		cartas.forEach{ carta => oponente.darCartaJugador(carta)}
+	}
+}
+
+object bot inherits Jugador {
+
 	var property numRandom = { numRandom = self.tomaCualquiera() }
 
-	method numCartas() = cartasJugador.map({ unaCarta => unaCarta.decimeTuNum() })
-
-	method mostraPuntosEnVisual() {
-		marcador.mostrate()
-	}
-
-	method sumarPunto() {
-		cantPuntos += 1
-		marcador.numPunto(cantPuntos)
-	}
-
 	method tomaCualquiera() = cartasJugador.map({ carta => carta.decimeTuNum() }).anyOne()
-
-	method sacaCartas(cartas) {
-		cartas.forEach{ carta => cartasJugador.remove(carta)}
-	}
 
 	method juga() {
 		numRandom.apply()
 		self.pedirNum(numRandom)
 	}
 
-	method cuatroCartasIguales(numero) {
-		if ((self.cartasConMismoNum(numero)).size() == 4) {
-			self.sumarPunto()
-			self.sacameCartasVisual(self.cartasConMismoNum(numero))
-			self.sacaCartas(self.cartasConMismoNum(numero))
-		}
-	}
-
-	method finPartida() {
-		if (self.cantPuntos() == 4) {
-			throw new Exception(message = "JUEGO TERMINADO SOS UN GANADOR")
-		}
-	}
-
-	method sacameCartasVisual(cartas) {
-		cartas.forEach{ carta => game.removeVisual(carta)}
-	}
-
-	method juli(carta) {
-		if (carta.decimeTuNum() == 1) {
-			self.irAPescar()
-		}
-	}
-
 	method pedirNum(unNumero) {
 //		self.cuatroCartasIguales(unNumero)
-		if (jugador.tenesEsteNum(unNumero)) {
+		if (oponente.tenesEsteNum(unNumero)) {
 			self.dameCartasConEseNum(unNumero)
 			self.numRandom({ numRandom = self.tomaCualquiera()})
 			self.finPartida()
@@ -197,59 +158,20 @@ object jugador2 {
 		self.numRandom({ numRandom = self.tomaCualquiera()})
 	}
 
-	method tenesEsteNum(unNumero) = (cartasJugador.map({ carta => carta.decimeTuNum() })).contains(unNumero)
-
-	method dameCartasConEseNum(unNumero) {
-		self.dameCartas(jugador.cartasConMismoNum(unNumero))
+	override method dameCartasConEseNum(unNumero) {
+		super(oponente.cartasConMismoNum(unNumero))
+		self.numRandom({ numRandom = self.tomaCualquiera()})
 	}
 
-	method cartasConMismoNum(unNumero) = cartasJugador.filter({ carta => carta.esPareja(unNumero) })
-
-	method dameCartas(cartas) {
-		cartas.forEach{ carta => jugador.darCartaJugador(carta)}
-	}
-
-	method recibirCartaMazo(carta) {
-		mazo.sacarCarta(carta)
-		cartasJugador.add(carta)
-		self.configuraCarta(carta)
-		self.mostrarCartaEnMesa(carta)
-	}
-
-	method recibirCartaJugador(carta) {
-		cartasJugador.add(carta)
-		self.configuraCarta(carta)
-	}
-
-	method configuraCarta(unaCarta) {
+	override method configuraCarta(unaCarta) {
 		unaCarta.esCartaJugador(false)
 		unaCarta.posicion(game.at(11, 12))
 		self.acomodarCartaEnMesa(unaCarta)
 	}
 
-	method acomodarCartaEnMesa(unaCarta) {
-		unaCarta.posicion(unaCarta.position().right(self.cartasJugador().size() + 1))
-	}
-
-	method mostrarCartaEnMesa(unaCarta) {
-		game.addVisual(unaCarta)
-	}
-
-	method agregarCartaJugador(carta) {
-		cartasJugador.add(carta)
-	}
-
-	method darCartaJugador(cartaPedida) {
-		self.sacarCarta(cartaPedida)
-		jugador.recibirCartaJugador(cartaPedida)
-	}
-
-	method sacarCarta(carta) {
-		cartasJugador.remove(carta)
-	}
-
-	method irAPescar() {
-		mazo.darUnaCarta(self)
+	override method mostraPuntosEnVisual() {
+		marcador.posicion(game.at(35, 15))
+		super()
 	}
 
 }
