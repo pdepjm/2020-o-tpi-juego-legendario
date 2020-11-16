@@ -95,6 +95,10 @@ class Jugador {
 	}
 	
 	method dameCartasConEseNum(unNumero) {}
+	
+	method dameCartas(cartas) {
+		cartas.forEach{ carta => oponente.darCartaJugador(carta)}
+	}
 
 }
 
@@ -102,7 +106,6 @@ object usuario inherits Jugador {
 
 	method pedirNum(unNumero) {
 		if (!self.tenesEsteNum(unNumero)) {
-//			game.errorReporter(self)
 			self.error("NO PODES PEDIR EL " + unNumero)
 			ronda.seguirJugando()
 		}
@@ -121,12 +124,11 @@ object usuario inherits Jugador {
 		self.cuatroCartasIguales(cartasJugador.last().decimeTuNum())
 	}
 
+	method juga(){
+	}
+	
 	override method dameCartasConEseNum(unNumero) {
 		self.dameCartas(oponente.cartasConMismoNum(unNumero))
-	}
-
-	method dameCartas(cartas) {
-		cartas.forEach{ carta => oponente.darCartaJugador(carta)}
 	}
 }
 
@@ -142,7 +144,6 @@ object bot inherits Jugador {
 	}
 
 	method pedirNum(unNumero) {
-//		self.cuatroCartasIguales(unNumero)
 		if (oponente.tenesEsteNum(unNumero)) {
 			self.dameCartasConEseNum(unNumero)
 			self.numRandom({ numRandom = self.tomaCualquiera()})
@@ -164,7 +165,6 @@ object bot inherits Jugador {
 	}
 
 	override method configuraCarta(unaCarta) {
-		unaCarta.esCartaJugador(false)
 		unaCarta.posicion(game.at(11, 12))
 		self.acomodarCartaEnMesa(unaCarta)
 	}
