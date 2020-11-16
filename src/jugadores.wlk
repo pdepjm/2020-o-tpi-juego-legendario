@@ -126,10 +126,12 @@ object usuario inherits Jugador {
 			self.error("NO PODES PEDIR EL " + unNumero)
 			ronda.seguirJugando()
 		}
+		self.cuatroCartasIguales(cartasJugador.last().decimeTuNum())
 		super(unNumero)
 		super(cartasJugador.last().decimeTuNum())
+		
 	}
-
+	
 	method juga(){
 	}
 }
