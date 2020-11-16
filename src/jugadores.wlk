@@ -101,17 +101,8 @@ class Jugador {
 	method dameCartasConEseNum(unNumero) {
 		self.dameCartas(oponente.cartasConMismoNum(unNumero))
 	}
-
-}
-
-object usuario inherits Jugador {
-
+	
 	method pedirNum(unNumero) {
-		if (!self.tenesEsteNum(unNumero)) {
-			self.error("NO PODES PEDIR EL " + unNumero)
-			ronda.seguirJugando()
-		}
-		self.cuatroCartasIguales(unNumero)
 		if (oponente.tenesEsteNum(unNumero)) {
 			self.dameCartasConEseNum(unNumero)
 			self.finPartida()
@@ -125,9 +116,21 @@ object usuario inherits Jugador {
 		self.cuatroCartasIguales(cartasJugador.last().decimeTuNum())
 	}
 
+}
+
+object usuario inherits Jugador {
+
+	override method pedirNum(unNumero) {
+		if (!self.tenesEsteNum(unNumero)) {
+			self.error("NO PODES PEDIR EL " + unNumero)
+			ronda.seguirJugando()
+		}
+		super(unNumero)
+		super(cartasJugador.last().decimeTuNum())
+	}
+
 	method juga(){
 	}
-	
 }
 
 object bot inherits Jugador {
@@ -136,20 +139,6 @@ object bot inherits Jugador {
 
 	method juga() {
 		self.pedirNum(self.tomaCualquiera())
-	}
-
-	method pedirNum(unNumero) {
-		if (oponente.tenesEsteNum(unNumero)) {
-			self.dameCartasConEseNum(unNumero)
-			self.finPartida()
-			ronda.seguirJugando()
-		} else {
-			self.irAPescar()
-			reglasLocas.evaluarReglasLocas(self, cartasJugador.last())
-			self.finPartida()
-			ronda.pasarTurno()
-		}
-		self.cuatroCartasIguales(cartasJugador.last().decimeTuNum())
 	}
 
 	override method configuraCarta(unaCarta) {
@@ -162,6 +151,5 @@ object bot inherits Jugador {
 		marcador.posicion(game.at(35, 15))
 		super()
 	}
-
 }
 
