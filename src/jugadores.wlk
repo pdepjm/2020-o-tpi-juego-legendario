@@ -104,7 +104,6 @@ class Jugador {
 	
 	method pedirNum(unNumero) {
 		if (oponente.tenesEsteNum(unNumero)) {
-			game.say(self, "dame el numero" + unNumero)
 			self.dameCartasConEseNum(unNumero)
 			self.finPartida()
 			ronda.seguirJugando()
