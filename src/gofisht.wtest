@@ -2,37 +2,37 @@ import cartas.*
 import jugadores.*
 import ronda.*
 
-describe "Go Fish"{
-
-test "Comenzar juego, y cargar cartas de los jugadores" {	
-	ronda.comenzarJuego()
-	assert.equals(7, jugador.cartasJugador().size())
-	assert.equals(7, jugador2.cartasJugador().size())
-
-}
-
-test "El jugador uno le pide un numero al jugadr dos"{
-		ronda.comenzarJuego()
-		jugador.pedirNum(jugador.numCartas().anyOne())
-		assert.that(jugador.cartasJugador().size() > 7)	
-}
-
-test "El jugador uno le pide cartas al dos y como las tiene gana un punto"{
-	(jugador.numCartas()).add([3, 4, 1, 2, 2, 4, 3])
-	(jugador2.numCartas()).add([4, 1, 1, 2, 3, 2, 4])
-	jugador.pedirNum(4)
-	assert.equals(1, jugador.cantPuntos())
-	assert.equals([3, 1, 2, 2, 3], jugador.numCartas())
-	assert.equals([1, 1, 2, 3, 2], jugador2.numCartas())
-}
-
-test "El jugador uno le pide cartas al dos y como no la tiene va a pescar, al ir a pescar"{
-	(jugador.numCartas()).add([3, 4, 1, 2, 2, 4, 3])
-	(jugador2.numCartas()).add([5, 1, 1, 2, 3, 2, 5])
-	jugador.pedirNum(4)
-	assert.equals(0, jugador.cantPuntos())
-	assert.equals(8, jugador.numCartas().size())
-	assert.equals([5, 1, 1, 2, 3, 2, 5], jugador2.numCartas())
-}
-
-}
+//describe "Go Fish"{
+//
+//test "Comenzar juego, y cargar cartas de los jugadores" {	
+//	ronda.comenzarJuego()
+//	assert.equals(7, jugador.cartasJugador().size())
+//	assert.equals(7, jugador2.cartasJugador().size())
+//
+//}
+//
+//test "El jugador uno le pide un numero al jugadr dos"{
+//		ronda.comenzarJuego()
+//		jugador.pedirNum(jugador.numCartas().anyOne())
+//		assert.that(jugador.cartasJugador().size() > 7)	
+//}
+//
+//test "El jugador uno le pide cartas al dos y como las tiene gana un punto"{
+//	(jugador.numCartas()).add([3, 4, 1, 2, 2, 4, 3])
+//	(jugador2.numCartas()).add([4, 1, 1, 2, 3, 2, 4])
+//	jugador.pedirNum(4)
+//	assert.equals(1, jugador.cantPuntos())
+//	assert.equals([3, 1, 2, 2, 3], jugador.numCartas())
+//	assert.equals([1, 1, 2, 3, 2], jugador2.numCartas())
+//}
+//
+//test "El jugador uno le pide cartas al dos y como no la tiene va a pescar, al ir a pescar"{
+//	(jugador.numCartas()).add([3, 4, 1, 2, 2, 4, 3])
+//	(jugador2.numCartas()).add([5, 1, 1, 2, 3, 2, 5])
+//	jugador.pedirNum(4)
+//	assert.equals(0, jugador.cantPuntos())
+//	assert.equals(8, jugador.numCartas().size())
+//	assert.equals([5, 1, 1, 2, 3, 2, 5], jugador2.numCartas())
+//}
+//
+//}
