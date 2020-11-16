@@ -21,7 +21,7 @@ class Jugador {
 	}
 
 	method sumarPunto() {
-		cantPuntos += 1
+		cantPuntos = (cantPuntos + 1).min(4)
 		marcador.numPunto(cantPuntos)
 	}
 
@@ -125,10 +125,8 @@ object usuario inherits Jugador {
 			self.error("NO PODES PEDIR EL " + unNumero)
 			ronda.seguirJugando()
 		}
-		self.cuatroCartasIguales(cartasJugador.last().decimeTuNum())
 		super(unNumero)
-		super(cartasJugador.last().decimeTuNum())
-		
+		super(cartasJugador.last().decimeTuNum())		
 	}
 	
 	method juga(){
@@ -144,7 +142,6 @@ object bot inherits Jugador {
 	}
 
 	override method configuraCarta(unaCarta) {
-		unaCarta.esCartaJugador(true)
 		unaCarta.posicion(game.at(11, 12))
 		self.acomodarCartaEnMesa(unaCarta)
 	}
