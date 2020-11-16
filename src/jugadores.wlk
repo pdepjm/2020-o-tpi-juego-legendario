@@ -94,10 +94,12 @@ class Jugador {
 		mazo.darUnaCarta(self)
 	}
 	
-	method dameCartasConEseNum(unNumero) {}
-	
 	method dameCartas(cartas) {
 		cartas.forEach{ carta => oponente.darCartaJugador(carta)}
+	}
+	
+	method dameCartasConEseNum(unNumero) {
+		self.dameCartas(oponente.cartasConMismoNum(unNumero))
 	}
 
 }
@@ -115,7 +117,6 @@ object usuario inherits Jugador {
 			self.finPartida()
 			ronda.seguirJugando()
 		} else {
-			game.sound("efectopescar.mp3")
 			self.irAPescar()
 			reglasLocas.evaluarReglasLocas(self, cartasJugador.last())
 			self.finPartida()
@@ -127,26 +128,19 @@ object usuario inherits Jugador {
 	method juga(){
 	}
 	
-	override method dameCartasConEseNum(unNumero) {
-		self.dameCartas(oponente.cartasConMismoNum(unNumero))
-	}
 }
 
 object bot inherits Jugador {
 
-	var property numRandom = { numRandom = self.tomaCualquiera() }
-
 	method tomaCualquiera() = cartasJugador.map({ carta => carta.decimeTuNum() }).anyOne()
 
 	method juga() {
-		numRandom.apply()
-		self.pedirNum(numRandom)
+		self.pedirNum(self.tomaCualquiera())
 	}
 
 	method pedirNum(unNumero) {
 		if (oponente.tenesEsteNum(unNumero)) {
 			self.dameCartasConEseNum(unNumero)
-			self.numRandom({ numRandom = self.tomaCualquiera()})
 			self.finPartida()
 			ronda.seguirJugando()
 		} else {
@@ -156,15 +150,10 @@ object bot inherits Jugador {
 			ronda.pasarTurno()
 		}
 		self.cuatroCartasIguales(cartasJugador.last().decimeTuNum())
-		self.numRandom({ numRandom = self.tomaCualquiera()})
-	}
-
-	override method dameCartasConEseNum(unNumero) {
-		super(oponente.cartasConMismoNum(unNumero))
-		self.numRandom({ numRandom = self.tomaCualquiera()})
 	}
 
 	override method configuraCarta(unaCarta) {
+		unaCarta.esCartaJugador(true)
 		unaCarta.posicion(game.at(11, 12))
 		self.acomodarCartaEnMesa(unaCarta)
 	}
