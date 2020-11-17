@@ -7,7 +7,7 @@ object mazo {
 	const property cartasMazo = []
 	const palos = [ "basto", "oro", "copa", "espada" ]
 
-	method position() = game.at(6,8)
+	method position() = game.at(15,8)
 
 	method image() = "posteriorMazo.png"
 

@@ -27,13 +27,17 @@ object ronda{
 		mazo.repartirCartas(usuario)
 		mazo.repartirCartas(bot)
 		self.asignaOponentes()
-		self.mostrarMarcadores(quienJuega)	
+		self.mostrarMarcadores(quienJuega)
+		self.mostrarCaritas(quienJuega)	
 	}
 	
 	method mostrarMarcadores(jugadores){
 			jugadores.forEach{unJugador=>unJugador.mostraPuntosEnVisual()}
 	}			
 	
+	method mostrarCaritas(jugadores){
+		jugadores.forEach{unJugador => unJugador.mostrarVisual()}
+	}
 	method posicionEnMesa(){
 		quienJuega.first().tomaPosicion(game.at(14,2))
 		quienJuega.last().tomaPosicion(game.at(14,12))

@@ -3,11 +3,20 @@ import cartas.*
 import ronda.*
 
 class Jugador {
-
+	var nombre
 	var property cantPuntos = 0
 	const property cartasJugador = []
 	const marcador = new Marcador()
 	var property oponente
+	var posicion
+	
+	method mostrarVisual(){
+		game.addVisual(self)
+	}
+
+	method position() = posicion
+	
+	method image() = "img"+nombre+".png"
 
 	method darCarta(cartaPedida) {
 		cartasJugador.remove(cartaPedida)
@@ -65,7 +74,7 @@ class Jugador {
 
 	method configuraCarta(carta) {
 		carta.esCartaJugador(true)
-		carta.posicion(game.at(11, 2))
+		carta.posicion(game.at(11, 1))
 		self.acomodarCartaEnMesa(carta)
 	}
 
@@ -114,6 +123,7 @@ class Jugador {
 			self.finPartida()
 			ronda.seguirJugando()
 		} else {
+			game.say(oponente,"No, GO FISH")
 			self.irAPescar()			
 			reglasLocas.evaluarReglasLocas(self, cartasJugador.last())
 			self.cuatroCartasIguales(unNumero)
@@ -123,7 +133,7 @@ class Jugador {
 	}
 }
 
-object usuario inherits Jugador {
+object usuario inherits Jugador(nombre="usuario",posicion=game.at(8,5)) {
 
 	override method pedirNum(unNumero) {
 		if (!self.tenesEsteNum(unNumero)) {
@@ -137,7 +147,7 @@ object usuario inherits Jugador {
 	}
 }
 
-object bot inherits Jugador {
+object bot inherits Jugador(nombre="bot",posicion=game.at(8,15)) {
 
 	method tomaCualquiera() = cartasJugador.map({ carta => carta.decimeTuNum() }).anyOne()
 
@@ -147,7 +157,7 @@ object bot inherits Jugador {
 
 	override method configuraCarta(unaCarta) {
 		unaCarta.esCartaJugador(true)
-		unaCarta.posicion(game.at(11, 12))
+		unaCarta.posicion(game.at(11, 13))
 		self.acomodarCartaEnMesa(unaCarta)
 	}
 
@@ -157,6 +167,7 @@ object bot inherits Jugador {
 	}
 	
 	override method pedirNum(numero){
+		game.say(self,"¿tenes el "+numero)
 		game.removeTickEvent("pensando")
 		super(numero)
 	}
