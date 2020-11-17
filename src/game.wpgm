@@ -12,7 +12,7 @@ program iniciar{
 	game.ground("fondoMesa.png")
 	mazo.mostrate()
 	
- 	keyboard.num1().onPressDo({usuario.pedirNum(1)})
+ 	keyboard.num1().onPressDo({usuario.pedirNum(1);game.say(mazo,"pediste el numero 1")})
 	keyboard.num2().onPressDo({usuario.pedirNum(2)})
 	keyboard.num3().onPressDo({usuario.pedirNum(3)})
 	keyboard.num4().onPressDo({usuario.pedirNum(4)})

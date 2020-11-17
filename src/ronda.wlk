@@ -1,4 +1,3 @@
-
 import wollok.game.*
 import jugadores.*
 import cartas.*
@@ -79,7 +78,6 @@ object masUnPunto{
 	}
 } 	
 
-
 class Marcador{
 	var property posicion = game.at(35,4)
 	var property numPunto = 0
@@ -91,5 +89,12 @@ class Marcador{
 	method image() = "punto"+numPunto+".png"
 }
 
-
+object mensaje{
+	
+	method position() = game.center()
+	
+	method image() = "pedir1.png"
+	
+	method decilo() = "HOLA MASTER"
+}
 

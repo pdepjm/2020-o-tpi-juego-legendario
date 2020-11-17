@@ -142,7 +142,7 @@ object bot inherits Jugador {
 	method tomaCualquiera() = cartasJugador.map({ carta => carta.decimeTuNum() }).anyOne()
 
 	method juga() {
-		self.pedirNum(self.tomaCualquiera())
+		game.onTick(8000,"pensando",{self.pedirNum(self.tomaCualquiera())})
 	}
 
 	override method configuraCarta(unaCarta) {
@@ -154,6 +154,11 @@ object bot inherits Jugador {
 	override method mostraPuntosEnVisual() {
 		marcador.posicion(game.at(35, 15))
 		super()
+	}
+	
+	override method pedirNum(numero){
+		game.removeTickEvent("pensando")
+		super(numero)
 	}
 }
 
