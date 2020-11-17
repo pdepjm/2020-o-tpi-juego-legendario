@@ -25,24 +25,29 @@ class Jugador {
 		marcador.numPunto(cantPuntos)
 	}
 
-	method sacaCartas(cartas) {
-		cartas.forEach{ carta => cartasJugador.remove(carta)}
-	}
+
 
 	method cuatroCartasIguales(numero) {
-		if ((self.cartasConMismoNum(numero)).size() == 4) {
+		if (self.tengoCuatroDelMismo(numero)) {
+//			game.say(self,"tenes cuatro "+numero)
 			self.sumarPunto()
-			self.sacameCartasVisual(self.cartasConMismoNum(numero))
-			self.sacaCartas(self.cartasConMismoNum(numero))
+			self.sacameCartasVisual(numero)
+			self.sacaCartas(numero)
 		}
 	}
 
-	method sacameCartasVisual(cartas) {
-		cartas.map{ carta => game.removeVisual(carta)}
+	method tengoCuatroDelMismo(numero) = (self.cartasConMismoNum(numero)).size() == 4
+
+	method sacameCartasVisual(numero) {
+		self.cartasConMismoNum(numero).forEach{ carta => game.removeVisual(carta)}
+	}
+	
+	method sacaCartas(numero) {
+		self.cartasConMismoNum(numero).forEach{ carta => cartasJugador.remove(carta)}
 	}
 
 	method finPartida() {
-		if (self.cantPuntos() == 4) {
+		if (self.cantPuntos() == 8) {
 			throw new Exception(message = "JUEGO TERMINADO SOS UN GANADOR")
 		}
 	}
@@ -102,20 +107,20 @@ class Jugador {
 		self.dameCartas(oponente.cartasConMismoNum(unNumero))
 	}
 	
-	method pedirNum(unNumero) {
+	method pedirNum(unNumero){
 		if (oponente.tenesEsteNum(unNumero)) {
 			self.dameCartasConEseNum(unNumero)
+			self.cuatroCartasIguales(unNumero)
 			self.finPartida()
 			ronda.seguirJugando()
 		} else {
 			self.irAPescar()
+			self.cuatroCartasIguales(unNumero)
 			reglasLocas.evaluarReglasLocas(self, cartasJugador.last())
 			self.finPartida()
 			ronda.pasarTurno()
 		}
-		self.cuatroCartasIguales(cartasJugador.last().decimeTuNum())
 	}
-
 }
 
 object usuario inherits Jugador {
@@ -126,7 +131,6 @@ object usuario inherits Jugador {
 			ronda.seguirJugando()
 		}
 		super(unNumero)
-		super(cartasJugador.last().decimeTuNum())		
 	}
 	
 	method juga(){
@@ -142,6 +146,7 @@ object bot inherits Jugador {
 	}
 
 	override method configuraCarta(unaCarta) {
+//		unaCarta.esCartaJugador(true)
 		unaCarta.posicion(game.at(11, 12))
 		self.acomodarCartaEnMesa(unaCarta)
 	}
