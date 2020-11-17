@@ -114,9 +114,9 @@ class Jugador {
 			self.finPartida()
 			ronda.seguirJugando()
 		} else {
-			self.irAPescar()
-			self.cuatroCartasIguales(unNumero)
+			self.irAPescar()			
 			reglasLocas.evaluarReglasLocas(self, cartasJugador.last())
+			self.cuatroCartasIguales(unNumero)
 			self.finPartida()
 			ronda.pasarTurno()
 		}
@@ -128,7 +128,7 @@ object usuario inherits Jugador {
 	override method pedirNum(unNumero) {
 		if (!self.tenesEsteNum(unNumero)) {
 			self.error("NO PODES PEDIR EL " + unNumero)
-			ronda.seguirJugando()
+//			ronda.seguirJugando()
 		}
 		super(unNumero)
 	}
@@ -146,7 +146,7 @@ object bot inherits Jugador {
 	}
 
 	override method configuraCarta(unaCarta) {
-//		unaCarta.esCartaJugador(true)
+		unaCarta.esCartaJugador(true)
 		unaCarta.posicion(game.at(11, 12))
 		self.acomodarCartaEnMesa(unaCarta)
 	}

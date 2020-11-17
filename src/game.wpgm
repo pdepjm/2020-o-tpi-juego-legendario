@@ -27,7 +27,7 @@ program iniciar{
 	
 	//keyboard.space().onPressDo({ronda.comenzarJuego()})
 	keyboard.enter().onPressDo({ronda.seguirJugando()})
-	keyboard.space().onPressDo({ronda.pasarTurno()})
+//	keyboard.space().onPressDo({ronda.pasarTurno()})
 
 	game.start()
 }

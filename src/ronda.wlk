@@ -47,33 +47,39 @@ object ronda{
 }
 
 object reglasLocas{
+	const property reglas = [doblePunto,pescasDNuevo,masUnPunto]
 	
 	method evaluarReglasLocas(elQJuega,carta){
-		self.reglaLoca1(elQJuega,carta)
-		self.reglaLoca2(elQJuega,carta)
-		self.reglaLoca3(elQJuega,carta)
-	}
-	
-	method reglaLoca1(elQJuega,carta){
-		if (carta.decimeTuNum() == 1){
-			elQJuega.sumarPunto()
-		}
-	}
-	
-	method reglaLoca2(elQJuega, carta){
-		if(carta.decimeTuNum() == 2){
-			elQJuega.irAPescar()
-		}
-	}
-	
-	method reglaLoca3(elQJuega, carta){
+		reglas.forEach{regla => regla.haceTuMagia(elQJuega,carta)}
+	}	
+}
+
+object doblePunto{
+	method haceTuMagia(elQJuega, carta){
 		if(carta.decimeTuNum() == 3){
 			elQJuega.sumarPunto()
 			elQJuega.sumarPunto()
 		}
 	}	
-	
 }
+
+object pescasDNuevo{
+	method haceTuMagia(elQJuega, carta){
+		if(carta.decimeTuNum() == 2){
+			elQJuega.irAPescar()
+		}
+	}
+}
+
+object masUnPunto{
+	method haceTuMagia(elQJuega,carta){
+		if (carta.decimeTuNum() == 1){
+			elQJuega.sumarPunto()
+		}
+	}
+} 	
+
+
 class Marcador{
 	var property posicion = game.at(35,4)
 	var property numPunto = 0
