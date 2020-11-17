@@ -2,37 +2,49 @@ import cartas.*
 import jugadores.*
 import ronda.*
 
-//describe "Go Fish"{
-//
-//test "Comenzar juego, y cargar cartas de los jugadores" {	
-//	ronda.comenzarJuego()
-//	assert.equals(7, jugador.cartasJugador().size())
-//	assert.equals(7, jugador2.cartasJugador().size())
-//
-//}
-//
-//test "El jugador uno le pide un numero al jugadr dos"{
-//		ronda.comenzarJuego()
-//		jugador.pedirNum(jugador.numCartas().anyOne())
-//		assert.that(jugador.cartasJugador().size() > 7)	
-//}
-//
-//test "El jugador uno le pide cartas al dos y como las tiene gana un punto"{
-//	(jugador.numCartas()).add([3, 4, 1, 2, 2, 4, 3])
-//	(jugador2.numCartas()).add([4, 1, 1, 2, 3, 2, 4])
-//	jugador.pedirNum(4)
-//	assert.equals(1, jugador.cantPuntos())
-//	assert.equals([3, 1, 2, 2, 3], jugador.numCartas())
-//	assert.equals([1, 1, 2, 3, 2], jugador2.numCartas())
-//}
-//
-//test "El jugador uno le pide cartas al dos y como no la tiene va a pescar, al ir a pescar"{
-//	(jugador.numCartas()).add([3, 4, 1, 2, 2, 4, 3])
-//	(jugador2.numCartas()).add([5, 1, 1, 2, 3, 2, 5])
-//	jugador.pedirNum(4)
-//	assert.equals(0, jugador.cantPuntos())
-//	assert.equals(8, jugador.numCartas().size())
-//	assert.equals([5, 1, 1, 2, 3, 2, 5], jugador2.numCartas())
-//}
-//
-//}
+describe "Go Fish"{
+const cuatroCopa = new Carta(palo = "copa", num = 4)
+	const cuatroOro = new Carta(palo = "oro", num = 4)
+	const unoCopa = new Carta(palo = "copa", num = 1)
+	const cincoEspada = new Carta(palo = "espada", num = 5)
+	const sieteEspada = new Carta(palo = "espada", num = 7)
+	const unoBasto = new Carta(palo = "basto", num = 1)
+	const ochoBasto = new Carta(palo = "basto", num = 8)
+	const cuatroBasto = new Carta(palo = "basto", num = 4)
+	const cuatroEspada = new Carta(palo = "espada", num = 4)
+	const nueveEspada = new Carta(palo = "espada", num = 9)
+	const nueveBasto = new Carta(palo = "basto", num = 9)
+	const seisOro = new Carta(palo = "oro", num = 6)
+	const dosEspada = new Carta(palo = "espada", num = 2)
+	const tresEspada = new Carta(palo = "espada", num = 3)
+	
+test "Comenzar juego, y cargar cartas de los jugadores" {	
+	ronda.comenzarJuego()
+	assert.equals(7, usuario.cartasJugador().size())
+	assert.equals(7, bot.cartasJugador().size())
+}
+
+test "El jugador uno le pide un numero al jugadr dos"{
+		ronda.comenzarJuego()
+		usuario.pedirNum(usuario.numCartas().anyOne())
+		assert.that(usuario.cartasJugador().size() > 7)	
+}
+
+test "El jugador uno le pide cartas al dos y como las tiene gana un punto"{									
+	usuario.cartasJugador().add([cuatroCopa,cuatroOro,unoCopa,cincoEspada,sieteEspada,unoBasto,ochoBasto])
+	bot.numCartas().add([cuatroBasto,cuatroEspada,nueveEspada,nueveBasto,seisOro,dosEspada,tresEspada])
+	usuario.pedirNum(4)
+	assert.equals(1, usuario.cantPuntos())
+	assert.equals([1,5,7,1,8], usuario.numCartas())
+	assert.equals([9,9,6,2,3], bot.numCartas())
+}
+
+test "El jugador uno le pide cartas al dos y como no la tiene va a pescar, al ir a pescar"{
+	usuario.cartasJugador().add([cuatroCopa,cuatroOro,unoCopa,cincoEspada,sieteEspada,unoBasto,ochoBasto])
+	bot.numCartas().add([cuatroBasto,cuatroEspada,nueveEspada,nueveBasto,seisOro,dosEspada,tresEspada])
+	usuario.pedirNum(5)
+	assert.equals(0, usuario.cantPuntos())
+	assert.that(usuario.numCartas().size() > 7)
+	assert.equals([4,4,9,9,6,2,3], bot.numCartas())
+}
+}
