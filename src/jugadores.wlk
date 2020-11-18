@@ -3,12 +3,22 @@ import cartas.*
 import ronda.*
 
 class Jugador {
-
 	var property cantPuntos = 0
 	const property cartasJugador = []
 	const marcador = new Marcador()
 	var property oponente
+	var nombre
+	var posicion
+	
 
+	method mostrarVisual(){
+		game.addVisual(self)
+	}
+
+	method position() = posicion
+
+	method image() = "img"+nombre+".png"
+	
 	method darCarta(cartaPedida) {
 		cartasJugador.remove(cartaPedida)
 		cartasJugador.add(cartaPedida)
@@ -21,7 +31,7 @@ class Jugador {
 	}
 
 	method sumarPunto() {
-		cantPuntos += 1
+		cantPuntos = (cantPuntos + 1).min(5)
 		marcador.numPunto(cantPuntos)
 	}
 
@@ -31,6 +41,7 @@ class Jugador {
 
 	method cuatroCartasIguales(numero) {
 		if ((self.cartasConMismoNum(numero)).size() == 4) {
+			game.say(self,"tenes cuatro "+numero)
 			self.sumarPunto()
 			self.sacameCartasVisual(self.cartasConMismoNum(numero))
 			self.sacaCartas(self.cartasConMismoNum(numero))
@@ -38,11 +49,11 @@ class Jugador {
 	}
 
 	method sacameCartasVisual(cartas) {
-		cartas.map{ carta => game.removeVisual(carta)}
+		cartas.forEach{ carta => game.removeVisual(carta)}
 	}
 
 	method finPartida() {
-		if (self.cantPuntos() == 4) {
+		if (self.cantPuntos() == 5) {
 			throw new Exception(message = "JUEGO TERMINADO SOS UN GANADOR")
 		}
 	}
@@ -60,7 +71,7 @@ class Jugador {
 
 	method configuraCarta(carta) {
 		carta.esCartaJugador(true)
-		carta.posicion(game.at(11, 2))
+		carta.posicion(game.at(11, 1))
 		self.acomodarCartaEnMesa(carta)
 	}
 
@@ -105,42 +116,39 @@ class Jugador {
 	method pedirNum(unNumero) {
 		if (oponente.tenesEsteNum(unNumero)) {
 			self.dameCartasConEseNum(unNumero)
+			self.cuatroCartasIguales(unNumero)
 			self.finPartida()
 			ronda.seguirJugando()
 		} else {
 			self.irAPescar()
 			reglasLocas.evaluarReglasLocas(self, cartasJugador.last())
+			self.cuatroCartasIguales(cartasJugador.last().decimeTuNum())
 			self.finPartida()
 			ronda.pasarTurno()
 		}
-		self.cuatroCartasIguales(cartasJugador.last().decimeTuNum())
 	}
 
 }
 
-object usuario inherits Jugador {
+object usuario inherits Jugador(nombre="usuario",posicion=game.at(8,5)) {
 
 	override method pedirNum(unNumero) {
 		if (!self.tenesEsteNum(unNumero)) {
 			self.error("NO PODES PEDIR EL " + unNumero)
-			ronda.seguirJugando()
 		}
-		self.cuatroCartasIguales(cartasJugador.last().decimeTuNum())
-		super(unNumero)
-		super(cartasJugador.last().decimeTuNum())
-		
+		super(unNumero)	
 	}
 	
 	method juga(){
 	}
 }
 
-object bot inherits Jugador {
+object bot inherits Jugador(nombre="bot",posicion=game.at(8,15)) {
 
 	method tomaCualquiera() = cartasJugador.map({ carta => carta.decimeTuNum() }).anyOne()
 
 	method juga() {
-		self.pedirNum(self.tomaCualquiera())
+		game.onTick(5000,"pensando",{self.pedirNum(self.tomaCualquiera())})
 	}
 
 	override method configuraCarta(unaCarta) {
@@ -152,6 +160,12 @@ object bot inherits Jugador {
 	override method mostraPuntosEnVisual() {
 		marcador.posicion(game.at(35, 15))
 		super()
+	}
+	
+	override method pedirNum(numero){
+		game.say(self,"¿ tenes el "+numero+" ?")		
+		game.removeTickEvent("pensando")
+		super(numero)
 	}
 }
 
