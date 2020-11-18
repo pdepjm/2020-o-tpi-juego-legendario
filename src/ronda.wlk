@@ -29,6 +29,7 @@ object ronda{
 		self.asignaOponentes()
 		self.mostrarMarcadores(quienJuega)
 		self.mostrarCaritas(quienJuega)	
+		reglasLocas.mostrate()
 	}
 	
 	method mostrarMarcadores(jugadores){
@@ -50,8 +51,15 @@ object ronda{
 }
 
 object reglasLocas{
+	
 	const property reglas = [doblePunto,pescasDNuevo,masUnPunto]
 	
+	method position() = game.at(1,3)
+	
+	method image() = "reglas.png"
+	
+	method mostrate(){game.addVisual(self)}
+		
 	method evaluarReglasLocas(elQJuega,carta){
 		reglas.forEach{regla => regla.haceTuMagia(elQJuega,carta)}
 	}	
@@ -83,7 +91,7 @@ object masUnPunto{
 } 	
 
 class Marcador{
-	var property posicion = game.at(35,4)
+	var property posicion 
 	var property numPunto = 0
 	
 	method position()= posicion 
