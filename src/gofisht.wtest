@@ -20,8 +20,8 @@ const cuatroCopa = new Carta(palo = "copa", num = 4)
 	
 test "Comenzar juego, y cargar cartas de los jugadores" {	
 	ronda.comenzarJuego()
-	assert.equals(7, usuario.cartasJugador().size())
-	assert.equals(7, bot.cartasJugador().size())
+	assert.that(usuario.cartasJugador().size() == 7)
+	assert.that(bot.cartasJugador().size() == 7)
 }
 
 test "El jugador uno le pide un numero al jugadr dos"{
@@ -30,21 +30,39 @@ test "El jugador uno le pide un numero al jugadr dos"{
 		assert.that(usuario.cartasJugador().size() > 7)	
 }
 
-test "El jugador uno le pide cartas al dos y como las tiene gana un punto"{									
-	usuario.cartasJugador().add([cuatroCopa,cuatroOro,unoCopa,cincoEspada,sieteEspada,unoBasto,ochoBasto])
-	bot.numCartas().add([cuatroBasto,cuatroEspada,nueveEspada,nueveBasto,seisOro,dosEspada,tresEspada])
-	usuario.pedirNum(4)
-	assert.equals(1, usuario.cantPuntos())
-	assert.equals([1,5,7,1,8], usuario.numCartas())
-	assert.equals([9,9,6,2,3], bot.numCartas())
+//test "El jugador uno le pide cartas al dos y como las tiene gana un punto"{									
+//	mazo.cargaPalos()
+//	ronda.asignaOponentes()
+//	usuario.cartasJugador().add([cuatroCopa,cuatroOro,unoCopa,cincoEspada,sieteEspada,unoBasto,ochoBasto])
+//	bot.cartasJugador().add([cuatroBasto,cuatroEspada,nueveEspada,nueveBasto,seisOro,dosEspada,tresEspada])
+//	usuario.pedirNum(4)
+//	assert.equals(1, usuario.cantPuntos())
+//}
+//
+//test "El jugador uno le pide cartas al dos y como no la tiene va a pescar, al ir a pescar"{
+//	usuario.cartasJugador().add([cuatroCopa,cuatroOro,unoCopa,cincoEspada,sieteEspada,unoBasto,ochoBasto])
+//	bot.cartasJugador().add([cuatroBasto,cuatroEspada,nueveEspada,nueveBasto,seisOro,dosEspada,tresEspada])
+//	usuario.pedirNum(5)
+//	assert.equals(0, usuario.cantPuntos())
+//	assert.that(usuario.numCartas().size() > 7)
+//}
+
+test "El usuario esta bien posicionado"{
+		ronda.comenzarJuego()
+		assert.equals(usuario.position().x(), 11)	
+		assert.equals(usuario.position().y(), 5)
 }
 
-test "El jugador uno le pide cartas al dos y como no la tiene va a pescar, al ir a pescar"{
-	usuario.cartasJugador().add([cuatroCopa,cuatroOro,unoCopa,cincoEspada,sieteEspada,unoBasto,ochoBasto])
-	bot.numCartas().add([cuatroBasto,cuatroEspada,nueveEspada,nueveBasto,seisOro,dosEspada,tresEspada])
-	usuario.pedirNum(5)
-	assert.equals(0, usuario.cantPuntos())
-	assert.that(usuario.numCartas().size() > 7)
-	assert.equals([4,4,9,9,6,2,3], bot.numCartas())
+test "El bot esta bien posicionado"{
+		ronda.comenzarJuego()
+		assert.equals(bot.position().x(), 11)	
+		assert.equals(bot.position().y(), 15)
 }
+
+test "El mazo esta bien posicionado"{
+	ronda.comenzarJuego()
+	assert.equals(mazo.position().x(), 17)
+	assert.equals(mazo.position().y(), 8)
+}
+
 }
